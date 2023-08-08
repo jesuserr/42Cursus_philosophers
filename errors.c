@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:10:29 by codespace         #+#    #+#             */
-/*   Updated: 2023/08/08 16:42:17 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/08 17:40:23 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,11 @@ void	detect_no_numbers_and_limits(int argc, char **argv)
 			ft_error_handler(ERROR_FORMAT);
 		if (ft_atoi(argv[j]) < 1)
 			ft_error_handler(ERROR_PHILO);
-		if (ft_atoi(argv[j]) < 60 && (j > 1 && j <= 4))
+		if (ft_atoi(argv[j]) < 60 && (j >= 2 && j <= 4))
+		{
+			printf ("%sArgument %d ", RED, j);
 			ft_error_handler(ERROR_TIMES);
+		}
 		j++;
 	}
 }

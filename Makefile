@@ -3,23 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+         #
+#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/04/24 15:10:16 by jesuserr          #+#    #+#              #
-#    Updated: 2023/04/24 15:10:16 by jesuserr         ###   ########.fr        #
+#    Created: 2023/08/08 15:04:09 by codespace         #+#    #+#              #
+#    Updated: 2023/08/08 15:04:09 by codespace        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = push_swap
-NAME_BONUS = checker/checker
+NAME = philo
+NAME_BONUS = 
 
-SRCS = main.c errors.c lists.c moves.c sort.c sort_utils_1.c \
-sort_utils_2.c utils.c
-
-SRCS_BONUS = checker/main.c checker/checker_utils.c checker/errors.c \
-checker/get_next_line.c checker/get_next_line_utils.c \
-checker/lists.c checker/moves_1.c checker/moves_2.c \
-checker/sort_utils.c checker/utils.c
+SRCS = main.c errors.c utils.c
+SRCS_BONUS = 
 
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
@@ -30,8 +25,8 @@ INCLUDE = -I ./
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
 
-NORM = ${SRCS} push_swap.h
-NORMB = ${SRCS_BONUS} checker/get_next_line.h checker/checker.h
+NORM = ${SRCS} philo.h
+NORMB = ${SRCS_BONUS}
 GREEN = "\033[0;92m"
 RED = "\033[0;91m"
 BLUE = "\033[0;94m"

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:55:36 by codespace         #+#    #+#             */
-/*   Updated: 2023/08/08 16:42:38 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/10 11:54:38 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define ERROR_FORMAT			1
 # define ERROR_PHILO			2
 # define ERROR_TIMES			3
+# define ERROR_MEALS			4
 
 /*
 ** -.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-
@@ -35,37 +36,32 @@
 # include <limits.h>	// for INT_MAX && INT_MIN
 # include <stddef.h>	// for NULL
 # include <stdio.h>		// for printf
+# include <pthread.h>	// for threads
+# include <sys/time.h>  // for timer
 
 /*
 ** -.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-
 **                              STRUCT DECLARATIONS
 */
-typedef struct s_node
+typedef struct s_data
 {
-	int				value;
-	struct s_node	*next;
-	size_t			parse;
-}					t_node;
-
-typedef struct s_stack
-{
-	t_node	*head;
-	t_node	*tail;
-	size_t	size;
-	char	name;
-}			t_stack;
+	int		nbr_philo;
+	int		die_time;
+	int		eat_time;
+	int		sleep_time;
+	int		max_meals;
+}			t_data;
 
 /*
 ** -.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-
 **                              FUNCTION PROTOTYPES
 */
-
-void	init_program(int argc, char **argv);
-
 void	ft_error_handler(int error);
 void	detect_no_numbers_and_limits(int argc, char **argv);
 
 long	ft_atoi(const char *str);
 int		ft_isdigit(char c);
+
+void	timer(int action);
 
 #endif

@@ -13,7 +13,7 @@
 NAME = philo
 NAME_BONUS = 
 
-SRCS = main.c errors.c utils.c
+SRCS = main.c errors.c utils.c time.c
 SRCS_BONUS = 
 
 OBJS = $(SRCS:.c=.o)
@@ -23,7 +23,7 @@ DEPS_BONUS = $(SRCS_BONUS:.c=.d)
 
 INCLUDE = -I ./
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -pthread
 
 NORM = ${SRCS} philo.h
 NORMB = ${SRCS_BONUS}

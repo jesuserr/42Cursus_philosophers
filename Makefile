@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: codespace <codespace@student.42.fr>        +#+  +:+       +#+         #
+#    By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/08/08 15:04:09 by codespace         #+#    #+#              #
-#    Updated: 2023/08/08 15:04:09 by codespace        ###   ########.fr        #
+#    Created: 2023/08/08 15:04:09 by jesuserr          #+#    #+#              #
+#    Updated: 2023/08/08 15:04:09 by jesuserr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

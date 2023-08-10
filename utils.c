@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/08 16:43:03 by codespace         #+#    #+#             */
-/*   Updated: 2023/08/10 10:21:07 by codespace        ###   ########.fr       */
+/*   Created: 2023/08/08 16:43:03 by jesuserr          #+#    #+#             */
+/*   Updated: 2023/08/10 16:49:22 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ long	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-int	ft_isdigit(char c)
+int	ft_is_digit(char c)
 {
 	if (c >= '0' && c <= '9')
 		return (1);

@@ -5,27 +5,29 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 11:22:18 by codespace         #+#    #+#             */
-/*   Updated: 2023/08/10 11:23:35 by codespace        ###   ########.fr       */
+/*   Created: 2023/08/10 11:22:18 by jesuserr          #+#    #+#             */
+/*   Updated: 2023/08/10 19:42:06 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	timer(int action)
+long	get_time_ms(void)
 {
 	static struct timeval	start;
-	static struct timeval	end;
-	long					secs_used;
-	long					micros_used;
+	long					micros;
 
-	if (action == 0)
-		gettimeofday(&start, NULL);
-	else if (action == 1)
-	{
-		gettimeofday(&end, NULL);
-		secs_used = (end.tv_sec - start.tv_sec);
-		micros_used = ((secs_used * 1000000) + end.tv_usec) - (start.tv_usec);
-		printf ("Time: %d us\n", ((int)micros_used));
-	}
+	gettimeofday(&start, NULL);
+	micros = (start.tv_sec * 1000000) + start.tv_usec;
+	return (micros / 1000);
+}
+
+long	get_time_us(void)
+{
+	static struct timeval	start;
+	long					micros;
+
+	gettimeofday(&start, NULL);
+	micros = (start.tv_sec * 1000000) + start.tv_usec;
+	return (micros);
 }

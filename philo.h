@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/08 15:55:36 by codespace         #+#    #+#             */
-/*   Updated: 2023/08/10 11:54:38 by codespace        ###   ########.fr       */
+/*   Created: 2023/08/08 15:55:36 by jesuserr          #+#    #+#             */
+/*   Updated: 2023/08/10 19:43:20 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define ERROR_PHILO			2
 # define ERROR_TIMES			3
 # define ERROR_MEALS			4
+# define ERROR_MEM				5
 
 /*
 ** -.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-
@@ -43,25 +44,38 @@
 ** -.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-
 **                              STRUCT DECLARATIONS
 */
-typedef struct s_data
+struct	s_philo;
+
+typedef struct s_info
 {
-	int		nbr_philo;
-	int		die_time;
-	int		eat_time;
-	int		sleep_time;
-	int		max_meals;
-}			t_data;
+	int				nbr_philos;
+	int				die_time;
+	int				eat_time;
+	int				sleep_time;
+	int				max_meals;
+	pthread_mutex_t	*forks_mtx;
+	pthread_mutex_t	print_mtx;
+	struct s_philo	*philo_list;
+}				t_info;
+
+typedef struct s_philo
+{
+	int		philo_id;
+	int		meals;
+	long	last_meal;
+}				t_philo;
 
 /*
 ** -.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-
 **                              FUNCTION PROTOTYPES
 */
 void	ft_error_handler(int error);
-void	detect_no_numbers_and_limits(int argc, char **argv);
+void	check_args(int argc, char **argv);
 
 long	ft_atoi(const char *str);
-int		ft_isdigit(char c);
+int		ft_is_digit(char c);
 
-void	timer(int action);
+long	get_time_ms(void);
+long	get_time_us(void);
 
 #endif

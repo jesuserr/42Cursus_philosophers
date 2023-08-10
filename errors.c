@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/08 15:10:29 by codespace         #+#    #+#             */
-/*   Updated: 2023/08/10 11:58:09 by codespace        ###   ########.fr       */
+/*   Created: 2023/08/08 15:10:29 by jesuserr          #+#    #+#             */
+/*   Updated: 2023/08/10 17:32:25 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,12 @@ void	ft_error_handler(int error)
 		printf ("%sInvalid time - minimum 60 ms\n", RED);
 	else if (error == ERROR_MEALS)
 		printf ("%sInvalid number of meals - minimum 1\n", RED);
+	else if (error == ERROR_MEM)
+		printf ("%sError allocating memory\n", RED);
 	exit(EXIT_FAILURE);
 }
 
-void	detect_no_numbers_and_limits(int argc, char **argv)
+void	check_args(int argc, char **argv)
 {
 	int		i;
 	int		j;
@@ -37,7 +39,7 @@ void	detect_no_numbers_and_limits(int argc, char **argv)
 	{
 		i = 0;
 		while (argv[j][i] != '\0')
-			if (!(ft_isdigit(argv[j][i++])))
+			if (!(ft_is_digit(argv[j][i++])))
 				ft_error_handler(ERROR_FORMAT);
 		if (ft_atoi(argv[j]) > INT_MAX)
 			ft_error_handler(ERROR_FORMAT);

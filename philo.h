@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:55:36 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/10 19:43:20 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/11 10:49:41 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 **                              HEADERS
 */
 # include <unistd.h>    // for write
-# include <stdlib.h>    // for exit, malloc
+# include <stdlib.h>    // for malloc
 # include <limits.h>	// for INT_MAX && INT_MIN
 # include <stddef.h>	// for NULL
 # include <stdio.h>		// for printf
@@ -69,8 +69,8 @@ typedef struct s_philo
 ** -.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-
 **                              FUNCTION PROTOTYPES
 */
-void	ft_error_handler(int error);
-void	check_args(int argc, char **argv);
+int		ft_error_handler(int error);
+int		check_args(int argc, char **argv);
 
 long	ft_atoi(const char *str);
 int		ft_is_digit(char c);

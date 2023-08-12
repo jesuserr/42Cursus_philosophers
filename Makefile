@@ -13,7 +13,7 @@
 NAME = philo
 NAME_BONUS = 
 
-SRCS = main.c errors.c utils.c time.c
+SRCS = main.c errors.c utils.c time.c inits.c routine.c
 SRCS_BONUS = 
 
 OBJS = $(SRCS:.c=.o)

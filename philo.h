@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:55:36 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/12 15:43:54 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/12 17:57:28 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_info
 	pthread_mutex_t	*forks_mtx;
 	pthread_mutex_t	print_mtx;
 	struct s_philo	*philo_list;
+	pthread_t		*philos_t;
 }				t_info;
 
 typedef struct s_philo
@@ -79,5 +80,12 @@ long	get_time_ms(void);
 long	get_time_us(void);
 void	ft_usleep(long microsecs);
 void	ft_msleep(long milisecs);
+
+void	init_info(int argc, char **argv, t_info *info);
+int		init_philos(t_info *info);
+int		init_mutexes(t_info *info);
+int		init_threads(t_info *info);
+
+void	*routine();
 
 #endif

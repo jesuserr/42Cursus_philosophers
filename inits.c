@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:47:49 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/12 18:56:11 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/12 22:06:31 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	init_info(int argc, char **argv, t_info *info)
 }
 
 /* Inits information for each one of the philosophers */
+/* Each philo contains a pointer to the 'info' struct */
 /* IN PROGRESS */
 int	init_philos(t_info *info)
 {
@@ -43,7 +44,8 @@ int	init_philos(t_info *info)
 	{
 		philos[i].philo_id = i;
 		philos[i].meals = 0;
-		philos[i].last_meal = get_time_ms();
+		philos[i].last_meal = get_time_us();
+		philos[i].info = info;
 		i++;
 	}
 	info->philo_list = philos;
@@ -83,7 +85,8 @@ int	init_threads(t_info *info)
 		return (ft_error_handler(ERROR_MEM, info));
 	while (i < info->nbr_philos)
 	{
-		pthread_create(&philos[i], NULL, &routine, NULL);
+		pthread_create(&philos[i], NULL, &routine, \
+			(void *) &info->philo_list[i]);
 		i++;
 	}
 	info->philos_t = philos;

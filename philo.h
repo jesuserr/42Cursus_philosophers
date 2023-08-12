@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:55:36 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/12 18:50:26 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/12 21:48:53 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,10 @@ typedef struct s_info
 
 typedef struct s_philo
 {
-	int		philo_id;
-	int		meals;
-	long	last_meal;
+	int				philo_id;
+	int				meals;
+	long			last_meal;
+	struct s_info	*info;
 }				t_philo;
 
 /*
@@ -87,6 +88,6 @@ int		init_philos(t_info *info);
 int		init_mutexes(t_info *info);
 int		init_threads(t_info *info);
 
-void	*routine();
+void	*routine(void *arg);
 
 #endif

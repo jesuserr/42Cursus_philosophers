@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:05:04 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/12 16:06:48 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/12 16:52:36 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,23 @@ int	init_mutexes(t_info *info)
 	return (0);
 }
 
+/* Unlock & destroy array of mutexes (one mutex per fork/philo) */
+/* Verify before project completion that unlock is needed */
+void	destroy_mutexes(t_info *info)
+{
+	int	i;
+
+	i = 0;
+	while (i < info->nbr_philos)
+	{
+		pthread_mutex_unlock(&info->forks_mtx[i]);
+		pthread_mutex_destroy(&info->forks_mtx[i]);
+		i++;
+	}
+	pthread_mutex_unlock(&info->print_mtx);
+	pthread_mutex_destroy(&info->print_mtx);
+}
+
 int	main(int argc, char **argv)
 {
 	t_info	info;
@@ -81,7 +98,7 @@ int	main(int argc, char **argv)
 		return (1);
 	if (init_mutexes(&info))
 		return (1);
-	//kill mutexes
+	destroy_mutexes(&info);
 	free(info.forks_mtx);
 	free(info.philo_list);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:55:36 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/11 10:49:41 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/12 15:43:54 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,7 @@ int		ft_is_digit(char c);
 
 long	get_time_ms(void);
 long	get_time_us(void);
+void	ft_usleep(long microsecs);
+void	ft_msleep(long milisecs);
 
 #endif

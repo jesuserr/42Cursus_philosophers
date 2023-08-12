@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:05:04 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/11 11:52:18 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/12 16:06:48 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,10 @@ unsigned long a = get_time_ms();
 	printf("\n%ld: ", info.philo_list[0].last_meal);
 	printf("\n%ld: ", info.philo_list[9].last_meal);
 	make && valgrind --leak-check=full -s ./philo 100 60 60 60 56
+
+	long a = get_time_ms();
+	//ft_usleep(333);
+	//ft_msleep(5);
+	usleep(5000);
+	printf("%lu", get_time_ms() - a);
 */

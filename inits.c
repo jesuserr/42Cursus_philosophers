@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:47:49 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/12 18:09:11 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/12 18:56:11 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ void	init_info(int argc, char **argv, t_info *info)
 		info->max_meals = ft_atoi(argv[5]);
 	else
 		info->max_meals = -1;
+	info->forks_mtx = NULL;
+	info->philo_list = NULL;
+	info->philos_t = NULL;
 }
 
 /* Inits information for each one of the philosophers */
@@ -34,7 +37,7 @@ int	init_philos(t_info *info)
 
 	philos = malloc(sizeof(t_philo) * info->nbr_philos);
 	if (!philos)
-		return (ft_error_handler(ERROR_MEM));
+		return (ft_error_handler(ERROR_MEM, info));
 	i = 0;
 	while (i < info->nbr_philos)
 	{
@@ -57,10 +60,7 @@ int	init_mutexes(t_info *info)
 	i = 0;
 	mutex = malloc(sizeof(pthread_mutex_t) * info->nbr_philos);
 	if (!mutex)
-	{
-		free (info->philo_list);
-		return (ft_error_handler(ERROR_MEM));
-	}
+		return (ft_error_handler(ERROR_MEM, info));
 	while (i < info->nbr_philos)
 	{
 		pthread_mutex_init(&mutex[i], NULL);
@@ -80,11 +80,7 @@ int	init_threads(t_info *info)
 	i = 0;
 	philos = malloc(sizeof(pthread_t) * info->nbr_philos);
 	if (!philos)
-	{
-		free (info->philo_list);
-		free (info->forks_mtx);
-		return (ft_error_handler(ERROR_MEM));
-	}
+		return (ft_error_handler(ERROR_MEM, info));
 	while (i < info->nbr_philos)
 	{
 		pthread_create(&philos[i], NULL, &routine, NULL);

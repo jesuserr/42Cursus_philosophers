@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:55:36 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/12 17:57:28 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/12 18:50:26 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ typedef struct s_philo
 ** -.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-
 **                              FUNCTION PROTOTYPES
 */
-int		ft_error_handler(int error);
+int		ft_error_handler(int error, t_info *info);
+void	free_memory(t_info *info);
 int		check_args(int argc, char **argv);
 
 long	ft_atoi(const char *str);

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:05:04 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/12 18:13:16 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/12 18:56:29 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ int	main(int argc, char **argv)
 		return (1);
 	join_threads(&info);
 	destroy_mutexes(&info);
-	free(info.philos_t);
-	free(info.forks_mtx);
-	free(info.philo_list);
+	free_memory(&info);
 	return (0);
 }
 

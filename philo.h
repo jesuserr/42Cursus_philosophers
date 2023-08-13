@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:55:36 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/12 21:48:53 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/13 18:34:22 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ typedef struct s_info
 	int				max_meals;
 	pthread_mutex_t	*forks_mtx;
 	pthread_mutex_t	print_mtx;
-	struct s_philo	*philo_list;
-	pthread_t		*philos_t;
+	struct s_philo	*philos_list;
+	pthread_t		*philos_th;
 }				t_info;
 
 typedef struct s_philo

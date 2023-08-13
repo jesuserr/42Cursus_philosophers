@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:47:49 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/12 22:06:31 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/13 18:34:22 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	init_info(int argc, char **argv, t_info *info)
 	else
 		info->max_meals = -1;
 	info->forks_mtx = NULL;
-	info->philo_list = NULL;
-	info->philos_t = NULL;
+	info->philos_list = NULL;
+	info->philos_th = NULL;
 }
 
 /* Inits information for each one of the philosophers */
@@ -48,7 +48,7 @@ int	init_philos(t_info *info)
 		philos[i].info = info;
 		i++;
 	}
-	info->philo_list = philos;
+	info->philos_list = philos;
 	return (0);
 }
 
@@ -86,9 +86,9 @@ int	init_threads(t_info *info)
 	while (i < info->nbr_philos)
 	{
 		pthread_create(&philos[i], NULL, &routine, \
-			(void *) &info->philo_list[i]);
+			(void *) &info->philos_list[i]);
 		i++;
 	}
-	info->philos_t = philos;
+	info->philos_th = philos;
 	return (0);
 }

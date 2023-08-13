@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:05:04 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/13 18:34:22 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/13 19:30:55 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ int	main(int argc, char **argv)
 	if (check_args(argc, argv))
 		return (1);
 	init_info(argc, argv, &info);
-	if (init_philos(&info))
-		return (1);
 	if (init_mutexes(&info))
+		return (1);
+	if (init_philos(&info))
 		return (1);
 	if (init_threads(&info))
 		return (1);

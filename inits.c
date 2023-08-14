@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:47:49 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/13 19:30:44 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/14 20:45:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	init_info(int argc, char **argv, t_info *info)
 	info->forks_mtx = NULL;
 	info->philos_list = NULL;
 	info->philos_th = NULL;
+	info->total_meals = 0;
 }
 
 /* Inits information for each one of the philosophers */
@@ -77,6 +78,7 @@ int	init_mutexes(t_info *info)
 }
 
 /* Initializes an array of threads (one per philo) */
+/* Start_time init here */
 int	init_threads(t_info *info)
 {
 	int			i;
@@ -86,6 +88,7 @@ int	init_threads(t_info *info)
 	philos = malloc(sizeof(pthread_t) * info->nbr_philos);
 	if (!philos)
 		return (ft_error_handler(ERROR_MEM, info));
+	info->start_time = get_time_ms();
 	while (i < info->nbr_philos)
 	{
 		pthread_create(&philos[i], NULL, &routine, \

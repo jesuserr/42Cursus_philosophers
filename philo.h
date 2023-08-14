@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:55:36 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/13 18:57:30 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/14 19:29:11 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct s_info
 	int				eat_time;
 	int				sleep_time;
 	int				max_meals;
+	int				total_meals;
+	long			start_time;
 	pthread_mutex_t	*forks_mtx;
 	pthread_mutex_t	print_mtx;
 	struct s_philo	*philos_list;

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:47:49 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/16 16:38:16 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/16 18:54:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,12 @@ int	init_threads(t_info *info)
 	if (!philos)
 		return (ft_error_handler(ERROR_MEM, info));
 	info->start_time = get_time_ms();
+	info->philos_th = philos;
 	while (i < info->nbr_philos)
 	{
 		pthread_create(&philos[i], NULL, &routine, \
 			(void *) &info->philos_list[i]);
 		i++;
 	}
-	info->philos_th = philos;
 	return (0);
 }

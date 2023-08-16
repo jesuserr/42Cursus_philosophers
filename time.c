@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 11:22:18 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/16 16:42:05 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/16 19:10:18 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 long	get_time_ms(void)
 {
 	struct timeval	start;
-	long			milisecs;
-
+	
 	gettimeofday(&start, NULL);
-	milisecs = (start.tv_sec * 1000) + (start.tv_usec / 1000);
-	return (milisecs);
+	return ((start.tv_sec * 1000) + (start.tv_usec / 1000));
 }
 
 void	ft_msleep(long milisecs)

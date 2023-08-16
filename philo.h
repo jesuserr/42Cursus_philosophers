@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:55:36 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/14 19:29:11 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/16 16:46:02 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,6 @@ long	ft_atoi(const char *str);
 int		ft_is_digit(char c);
 
 long	get_time_ms(void);
-long	get_time_us(void);
-void	ft_usleep(long microsecs);
 void	ft_msleep(long milisecs);
 
 void	init_info(int argc, char **argv, t_info *info);

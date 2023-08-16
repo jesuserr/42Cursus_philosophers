@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:47:49 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/14 20:45:00 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/16 16:38:16 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	init_philos(t_info *info)
 	{
 		philos[i].philo_id = i;
 		philos[i].meals = 0;
-		philos[i].last_meal = get_time_us();
+		philos[i].last_meal = get_time_ms();
 		philos[i].info = info;
 		philos[i].right_fork = &info->forks_mtx[i];
 		philos[i].left_fork = &info->forks_mtx[i + 1];

@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 11:22:18 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/16 22:45:29 by codespace        ###   ########.fr       */
+/*   Created: 2023/08/16 22:43:53 by jesuserr          #+#    #+#             */
+/*   Updated: 2023/08/16 23:02:46 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	get_time_ms(void)
+void	*monitoring(void *arg)
 {
-	struct timeval	start;
+	t_info	*info;
 
-	gettimeofday(&start, NULL);
-	return ((start.tv_sec * 1000) + (start.tv_usec / 1000));
-}
-
-void	ft_msleep(long milisecs)
-{
-	long	start;
-
-	start = get_time_ms();
-	while ((get_time_ms() - start) < milisecs)
-		usleep(milisecs / 100);
+	info = (t_info *)arg;
+	while (get_time_ms() - info->start_time < 50000)
+		ft_msleep(1);
+	printf("%ld hello\n", get_time_ms() - info->start_time);
+	info->dead = 1;
+	return (NULL);
 }

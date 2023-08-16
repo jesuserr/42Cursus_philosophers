@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:55:36 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/16 16:46:02 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/16 22:45:07 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,12 @@ typedef struct s_info
 	int				max_meals;
 	int				total_meals;
 	long			start_time;
+	int				dead;
 	pthread_mutex_t	*forks_mtx;
 	pthread_mutex_t	print_mtx;
 	struct s_philo	*philos_list;
 	pthread_t		*philos_th;
+	pthread_t		monitor;
 }				t_info;
 
 typedef struct s_philo
@@ -91,5 +93,7 @@ int		init_mutexes(t_info *info);
 int		init_threads(t_info *info);
 
 void	*routine(void *arg);
+
+void	*monitoring(void *arg);
 
 #endif

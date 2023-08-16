@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:47:49 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/16 18:54:00 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/16 22:53:23 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,33 +27,7 @@ void	init_info(int argc, char **argv, t_info *info)
 	info->philos_list = NULL;
 	info->philos_th = NULL;
 	info->total_meals = 0;
-}
-
-/* Inits information for each one of the philosophers */
-/* Each philo contains a pointer to the 'info' struct */
-/* IN PROGRESS */
-int	init_philos(t_info *info)
-{
-	t_philo	*philos;
-	int		i;
-
-	philos = malloc(sizeof(t_philo) * info->nbr_philos);
-	if (!philos)
-		return (ft_error_handler(ERROR_MEM, info));
-	i = 0;
-	while (i < info->nbr_philos)
-	{
-		philos[i].philo_id = i;
-		philos[i].meals = 0;
-		philos[i].last_meal = get_time_ms();
-		philos[i].info = info;
-		philos[i].right_fork = &info->forks_mtx[i];
-		philos[i].left_fork = &info->forks_mtx[i + 1];
-		i++;
-	}
-	philos[i - 1].left_fork = &info->forks_mtx[0];
-	info->philos_list = philos;
-	return (0);
+	info->dead = 0;
 }
 
 /* Initializes an array of mutexes (one mutex per fork/philo) */
@@ -77,6 +51,32 @@ int	init_mutexes(t_info *info)
 	return (0);
 }
 
+/* Inits information for each one of the philosophers */
+/* Each philo contains a pointer to the 'info' struct */
+/* IN PROGRESS */
+int	init_philos(t_info *info)
+{
+	t_philo	*philos;
+	int		i;
+
+	philos = malloc(sizeof(t_philo) * info->nbr_philos);
+	if (!philos)
+		return (ft_error_handler(ERROR_MEM, info));
+	i = 0;
+	while (i < info->nbr_philos)
+	{
+		philos[i].philo_id = i;
+		philos[i].meals = 0;
+		philos[i].info = info;
+		philos[i].right_fork = &info->forks_mtx[i];
+		philos[i].left_fork = &info->forks_mtx[i + 1];
+		i++;
+	}
+	philos[i - 1].left_fork = &info->forks_mtx[0];
+	info->philos_list = philos;
+	return (0);
+}
+
 /* Initializes an array of threads (one per philo) */
 /* Start_time init here */
 int	init_threads(t_info *info)
@@ -88,13 +88,15 @@ int	init_threads(t_info *info)
 	philos = malloc(sizeof(pthread_t) * info->nbr_philos);
 	if (!philos)
 		return (ft_error_handler(ERROR_MEM, info));
-	info->start_time = get_time_ms();
 	info->philos_th = philos;
+	info->start_time = get_time_ms();
 	while (i < info->nbr_philos)
 	{
 		pthread_create(&philos[i], NULL, &routine, \
 			(void *) &info->philos_list[i]);
 		i++;
 	}
+	pthread_create(&info->monitor, NULL, &monitoring, (void *) info);
+	pthread_join(info->monitor, NULL);
 	return (0);
 }

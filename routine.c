@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:54:38 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/16 18:53:23 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/16 22:29:25 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	while (1)
+	philo->last_meal = philo->info->start_time;
+	while (philo->info->dead != 1)
 	{
 		grab_forks(philo);
 		eat_and_release_forks(philo);

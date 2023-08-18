@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:05:04 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/13 19:30:55 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/18 21:43:19 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	destroy_mutexes(t_info *info)
 	}
 	pthread_mutex_unlock(&info->print_mtx);
 	pthread_mutex_destroy(&info->print_mtx);
+	pthread_mutex_unlock(&info->start_mtx);
+	pthread_mutex_destroy(&info->start_mtx);
 }
 
 void	join_threads(t_info *info)

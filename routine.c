@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:54:38 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/18 13:31:16 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/18 21:41:50 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	pthread_mutex_init(&philo->info->start_mtx, NULL);
 	pthread_mutex_lock(&philo->info->start_mtx);
 	philo->info->active_threads++;
 	pthread_mutex_unlock(&philo->info->start_mtx);

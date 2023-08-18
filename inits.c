@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:47:49 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/18 13:30:37 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/18 21:41:15 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	init_info(int argc, char **argv, t_info *info)
 }
 
 /* Initializes an array of mutexes (one mutex per fork/philo) */
-/* Initializes also one mutex for printing */
+/* Initializes also mutex for printing and mutex for starting */
 int	init_mutexes(t_info *info)
 {
 	int				i;
@@ -50,6 +50,7 @@ int	init_mutexes(t_info *info)
 	}
 	info->forks_mtx = mutex;
 	pthread_mutex_init(&info->print_mtx, NULL);
+	pthread_mutex_init(&info->start_mtx, NULL);
 	return (0);
 }
 

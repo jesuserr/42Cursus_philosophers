@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:47:49 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/16 22:53:23 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/18 13:30:37 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	init_info(int argc, char **argv, t_info *info)
 	info->philos_th = NULL;
 	info->total_meals = 0;
 	info->dead = 0;
+	info->active_threads = 0;
+	info->start_time = 0;
 }
 
 /* Initializes an array of mutexes (one mutex per fork/philo) */
@@ -89,7 +91,6 @@ int	init_threads(t_info *info)
 	if (!philos)
 		return (ft_error_handler(ERROR_MEM, info));
 	info->philos_th = philos;
-	info->start_time = get_time_ms();
 	while (i < info->nbr_philos)
 	{
 		pthread_create(&philos[i], NULL, &routine, \

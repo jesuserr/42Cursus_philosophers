@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:05:04 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/19 11:32:04 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/19 14:25:32 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,13 @@ void	join_threads(t_info *info)
 	{
 		pthread_join(info->philos_th[i], NULL);
 		i++;
+	}
+	if ((info->max_meals > 0 && info->max_meals < INT_MAX) && \
+	(info->nbr_philos > 1))
+	{
+		pthread_mutex_lock(&info->print_mtx);
+		printf("Each philosopher ate: %d times\n", info->max_meals);
+		pthread_mutex_unlock(&info->print_mtx);
 	}
 }
 

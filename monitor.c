@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:43:53 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/18 13:22:19 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/19 00:28:24 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,30 @@
 void	*monitoring(void *arg)
 {
 	t_info	*info;
+	int		i;
 
 	info = (t_info *)arg;
 	while (info->active_threads != info->nbr_philos)
 		ft_msleep(1);
 	info->start_time = get_time_ms();
-	while (1)
-		;
+	ft_msleep(10);
+	while (info->dead == 0)
+	{
+		i = 0;
+		while (i < info->nbr_philos)
+		{
+			if ((get_time_ms() - info->philos_list[i].last_meal) > info->die_time)
+			{
+				info->dead = 1;
+				pthread_mutex_lock(&info->print_mtx);
+				printf("%ld %d %s\n", get_time_ms() - info->start_time, \
+					info->philos_list[i].philo_id + 1, "died");
+				break ;
+			}
+			i++;
+		}
+	}
 	return (NULL);
 }
+
+// printf("%ld \n", get_time_ms() - info->philos_list[i].last_meal);				

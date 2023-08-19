@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:54:38 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/18 21:41:50 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/19 00:23:26 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*routine(void *arg)
 	while (philo->info->start_time == 0)
 		ft_msleep(1);
 	philo->last_meal = philo->info->start_time;
-	while (philo->info->dead != 1)
+	while (philo->info->dead == 0)
 	{
 		grab_forks(philo);
 		eat_and_release_forks(philo);
@@ -40,11 +40,15 @@ void	*routine(void *arg)
 
 void	print_message(t_philo *philo, char *msg)
 {
-	pthread_mutex_lock(&philo->info->print_mtx);
-	printf("%ld %d %s\n", get_time_ms() - philo->info->start_time, \
-		philo->philo_id + 1, msg);
-	pthread_mutex_unlock(&philo->info->print_mtx);
+	if (philo->info->dead == 0)
+	{
+		pthread_mutex_lock(&philo->info->print_mtx);
+		printf("%ld %d %s\n", get_time_ms() - philo->info->start_time, \
+			philo->philo_id + 1, msg);
+		pthread_mutex_unlock(&philo->info->print_mtx);
+	}
 }
+//printf("%ld \n", get_time_ms() - philo->last_meal);
 
 void	grab_forks(t_philo *philo)
 {

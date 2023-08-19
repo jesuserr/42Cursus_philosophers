@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:55:36 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/18 13:21:53 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/19 11:30:35 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_info
 	pthread_mutex_t	*forks_mtx;
 	pthread_mutex_t	print_mtx;
 	pthread_mutex_t	start_mtx;
+	pthread_mutex_t	meals_mtx;
 	struct s_philo	*philos_list;
 	pthread_t		*philos_th;
 	pthread_t		monitor;

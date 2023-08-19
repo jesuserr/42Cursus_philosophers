@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:43:53 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/19 00:28:24 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/19 12:27:55 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	*monitoring(void *arg)
 		i = 0;
 		while (i < info->nbr_philos)
 		{
+			if (info->total_meals == (info->nbr_philos * info->max_meals))
+				return (NULL);
 			if ((get_time_ms() - info->philos_list[i].last_meal) > info->die_time)
 			{
 				info->dead = 1;
@@ -40,5 +42,3 @@ void	*monitoring(void *arg)
 	}
 	return (NULL);
 }
-
-// printf("%ld \n", get_time_ms() - info->philos_list[i].last_meal);				

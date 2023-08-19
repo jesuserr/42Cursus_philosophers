@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:54:38 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/19 00:23:26 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/19 12:37:17 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,12 @@ void	*routine(void *arg)
 	while (philo->info->start_time == 0)
 		ft_msleep(1);
 	philo->last_meal = philo->info->start_time;
-	while (philo->info->dead == 0)
+	if (philo->info->nbr_philos == 1)
+	{
+		print_message(philo, "has taken a fork");
+		return (NULL);
+	}
+	while (philo->info->dead == 0 && philo->meals < philo->info->max_meals)
 	{
 		grab_forks(philo);
 		eat_and_release_forks(philo);
@@ -48,7 +53,6 @@ void	print_message(t_philo *philo, char *msg)
 		pthread_mutex_unlock(&philo->info->print_mtx);
 	}
 }
-//printf("%ld \n", get_time_ms() - philo->last_meal);
 
 void	grab_forks(t_philo *philo)
 {
@@ -69,9 +73,12 @@ void	grab_forks(t_philo *philo)
 
 void	eat_and_release_forks(t_philo *philo)
 {
-	print_message(philo, "is eating");
 	philo->last_meal = get_time_ms();
+	print_message(philo, "is eating");
 	ft_msleep(philo->info->eat_time);
+	pthread_mutex_lock(&philo->info->meals_mtx);
+	philo->info->total_meals++;
+	pthread_mutex_unlock(&philo->info->meals_mtx);
 	philo->meals++;
 	if (philo->philo_id % 2 == 0)
 	{

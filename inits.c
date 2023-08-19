@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:47:49 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/18 21:41:15 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/19 11:30:23 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	init_info(int argc, char **argv, t_info *info)
 	if (argc == 6)
 		info->max_meals = ft_atoi(argv[5]);
 	else
-		info->max_meals = -1;
+		info->max_meals = INT_MAX;
 	info->forks_mtx = NULL;
 	info->philos_list = NULL;
 	info->philos_th = NULL;
@@ -51,6 +51,7 @@ int	init_mutexes(t_info *info)
 	info->forks_mtx = mutex;
 	pthread_mutex_init(&info->print_mtx, NULL);
 	pthread_mutex_init(&info->start_mtx, NULL);
+	pthread_mutex_init(&info->meals_mtx, NULL);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:55:36 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/19 11:30:35 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/19 19:13:33 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_info
 	pthread_mutex_t	print_mtx;
 	pthread_mutex_t	start_mtx;
 	pthread_mutex_t	meals_mtx;
-	struct s_philo	*philos_list;
+	struct s_philo	*philos_array;
 	pthread_t		*philos_th;
 	pthread_t		monitor;
 }				t_info;
@@ -80,23 +80,24 @@ typedef struct s_philo
 ** -.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-
 **                              FUNCTION PROTOTYPES
 */
+/*		errors.c		*/
 int		ft_error_handler(int error, t_info *info);
-void	free_memory(t_info *info);
 int		check_args(int argc, char **argv);
-
+/*		inits.c			*/
+void	init_info(int argc, char **argv, t_info *info);
+int		init_mutexes(t_info *info);
+int		init_philos(t_info *info);
+int		init_threads(t_info *info);
+/*		main.c			*/
+void	free_memory(t_info *info);
+/*		monitor.c		*/
+void	*monitoring(void *arg);
+/*		routine.c		*/
+void	*routine(void *arg);
+/*		utils.c			*/
 long	ft_atoi(const char *str);
 int		ft_is_digit(char c);
-
 long	get_time_ms(void);
 void	ft_msleep(long milisecs);
-
-void	init_info(int argc, char **argv, t_info *info);
-int		init_philos(t_info *info);
-int		init_mutexes(t_info *info);
-int		init_threads(t_info *info);
-
-void	*routine(void *arg);
-
-void	*monitoring(void *arg);
 
 #endif

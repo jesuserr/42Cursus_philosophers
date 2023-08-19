@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:10:29 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/13 18:34:22 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/19 18:45:37 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,6 @@ int	ft_error_handler(int error, t_info *info)
 		free_memory(info);
 	}
 	return (1);
-}
-
-void	free_memory(t_info *info)
-{
-	if (info->philos_list)
-		free(info->philos_list);
-	if (info->philos_th)
-		free(info->philos_th);
-	if (info->forks_mtx)
-		free(info->forks_mtx);
 }
 
 int	check_args(int argc, char **argv)

@@ -6,14 +6,36 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:05:04 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/19 14:25:32 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/19 19:13:33 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/* Unlock & destroy array of mutexes (one mutex per fork/philo) */
-/* Verify before project completion that unlock is needed */
+/* Wait for finalization of all the threads */
+/* Print info if number of meals have been specified and */
+/* number of philos is greater than 1 and nobody died */
+void	join_threads(t_info *info)
+{
+	int	i;
+
+	i = 0;
+	while (i < info->nbr_philos)
+	{
+		pthread_join(info->philos_th[i], NULL);
+		i++;
+	}
+	if ((info->max_meals > 0 && info->max_meals < INT_MAX) && \
+	(info->nbr_philos > 1) && (info->dead == 0))
+	{
+		pthread_mutex_lock(&info->print_mtx);
+		printf("Each philosopher ate: %d times\n", info->max_meals);
+		printf("Total served meals: %d\n", info->total_meals);
+		pthread_mutex_unlock(&info->print_mtx);
+	}
+}
+
+/* Unlock & destroy all mutexes */
 void	destroy_mutexes(t_info *info)
 {
 	int	i;
@@ -33,23 +55,14 @@ void	destroy_mutexes(t_info *info)
 	pthread_mutex_destroy(&info->meals_mtx);
 }
 
-void	join_threads(t_info *info)
+void	free_memory(t_info *info)
 {
-	int	i;
-
-	i = 0;
-	while (i < info->nbr_philos)
-	{
-		pthread_join(info->philos_th[i], NULL);
-		i++;
-	}
-	if ((info->max_meals > 0 && info->max_meals < INT_MAX) && \
-	(info->nbr_philos > 1))
-	{
-		pthread_mutex_lock(&info->print_mtx);
-		printf("Each philosopher ate: %d times\n", info->max_meals);
-		pthread_mutex_unlock(&info->print_mtx);
-	}
+	if (info->philos_array)
+		free(info->philos_array);
+	if (info->philos_th)
+		free(info->philos_th);
+	if (info->forks_mtx)
+		free(info->forks_mtx);
 }
 
 int	main(int argc, char **argv)
@@ -77,14 +90,14 @@ printf("\n%p", &info->print_mtx);
 unsigned long a = get_time_ms();
 	unsigned long b = get_time_us();
 	//printf("\n%lu", get_time());
-	//printf("%d", info.philos_list->philo_id);
-	//printf("%d", info.philos_list[5].philo_id);
+	//printf("%d", info.philos_array->philo_id);
+	//printf("%d", info.philos_array[5].philo_id);
 	//usleep(100000);
 	usleep(10000);
 	printf("\n%lu ms\n", get_time_ms() - a);
 	printf("\n%lu us\n", get_time_us() - b);
-	printf("\n%ld: ", info.philos_list[0].last_meal);
-	printf("\n%ld: ", info.philos_list[9].last_meal);
+	printf("\n%ld: ", info.philos_array[0].last_meal);
+	printf("\n%ld: ", info.philos_array[9].last_meal);
 	make && valgrind --leak-check=full -s ./philo 100 60 60 60 56
 
 	long a = get_time_ms();

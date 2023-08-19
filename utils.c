@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 16:43:03 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/10 16:49:22 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/19 18:39:38 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,21 @@ int	ft_is_digit(char c)
 	if (c >= '0' && c <= '9')
 		return (1);
 	return (0);
+}
+
+long	get_time_ms(void)
+{
+	struct timeval	start;
+
+	gettimeofday(&start, NULL);
+	return ((start.tv_sec * 1000) + (start.tv_usec / 1000));
+}
+
+void	ft_msleep(long milisecs)
+{
+	long	start;
+
+	start = get_time_ms();
+	while ((get_time_ms() - start) < milisecs)
+		usleep(milisecs / 100);
 }

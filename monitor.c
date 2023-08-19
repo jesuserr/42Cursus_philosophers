@@ -6,14 +6,28 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:43:53 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/19 14:18:52 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/19 19:29:03 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	execute_death(t_info *info, int i);
+/* Print mutex remains locked to avoid further printings */
+/* info->dead is the flag that stops everything */
+void	execute_death(t_info *info, int i)
+{
+	info->dead = 1;
+	pthread_mutex_lock(&info->print_mtx);
+	printf("%ld %d %s\n", get_time_ms() - info->start_time, \
+	info->philos_array[i].philo_id + 1, "died");
+}
 
+/* Waits for all the threads to be active in order to apply same starting */
+/* time to all of them. Waits 10 ms before starting monitoring to avoid */
+/* false positives. */
+/* If number of meals are reached, finishes monitoring execution. */
+/* If philosopher dies, activates flag to warn all philo threads, */
+/* prints message and finishes monitoring execution. */
 void	*monitoring(void *arg)
 {
 	t_info	*info;
@@ -31,7 +45,7 @@ void	*monitoring(void *arg)
 		{
 			if (info->total_meals == (info->nbr_philos * info->max_meals))
 				return (NULL);
-			if ((get_time_ms() - info->philos_list[i].last_meal) > \
+			if ((get_time_ms() - info->philos_array[i].last_meal) > \
 			info->die_time)
 			{
 				execute_death(info, i);
@@ -41,12 +55,4 @@ void	*monitoring(void *arg)
 		}
 	}
 	return (NULL);
-}
-
-void	execute_death(t_info *info, int i)
-{
-	info->dead = 1;
-	pthread_mutex_lock(&info->print_mtx);
-	printf("%ld %d %s\n", get_time_ms() - info->start_time, \
-	info->philos_list[i].philo_id + 1, "died");
 }

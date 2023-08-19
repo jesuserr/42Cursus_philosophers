@@ -6,13 +6,14 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:47:49 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/19 11:30:23 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/19 19:13:33 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/* Fills struct 'info' with the info provided by the user */
+/* Fill in struct 'info' with the data provided by the user and */
+/* initialize values. 'info' will contain all philos as an array */
 void	init_info(int argc, char **argv, t_info *info)
 {
 	info->nbr_philos = ft_atoi(argv[1]);
@@ -24,7 +25,7 @@ void	init_info(int argc, char **argv, t_info *info)
 	else
 		info->max_meals = INT_MAX;
 	info->forks_mtx = NULL;
-	info->philos_list = NULL;
+	info->philos_array = NULL;
 	info->philos_th = NULL;
 	info->total_meals = 0;
 	info->dead = 0;
@@ -32,8 +33,8 @@ void	init_info(int argc, char **argv, t_info *info)
 	info->start_time = 0;
 }
 
-/* Initializes an array of mutexes (one mutex per fork/philo) */
-/* Initializes also mutex for printing and mutex for starting */
+/* Init an array of mutexes (one per fork) */
+/* Init also mutexes for printing, starting and counting total meals */
 int	init_mutexes(t_info *info)
 {
 	int				i;
@@ -55,9 +56,8 @@ int	init_mutexes(t_info *info)
 	return (0);
 }
 
-/* Inits information for each one of the philosophers */
+/* Init information for each one of the philosophers */
 /* Each philo contains a pointer to the 'info' struct */
-/* IN PROGRESS */
 int	init_philos(t_info *info)
 {
 	t_philo	*philos;
@@ -77,12 +77,12 @@ int	init_philos(t_info *info)
 		i++;
 	}
 	philos[i - 1].left_fork = &info->forks_mtx[0];
-	info->philos_list = philos;
+	info->philos_array = philos;
 	return (0);
 }
 
-/* Initializes an array of threads (one per philo) */
-/* Start_time init here */
+/* Initialize an array of threads (one per philo) */
+/* Initialize another thread for monitoring all philos */
 int	init_threads(t_info *info)
 {
 	int			i;
@@ -96,7 +96,7 @@ int	init_threads(t_info *info)
 	while (i < info->nbr_philos)
 	{
 		pthread_create(&philos[i], NULL, &routine, \
-			(void *) &info->philos_list[i]);
+			(void *) &info->philos_array[i]);
 		i++;
 	}
 	pthread_create(&info->monitor, NULL, &monitoring, (void *) info);

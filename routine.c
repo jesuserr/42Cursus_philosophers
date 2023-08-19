@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:54:38 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/19 12:37:17 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/19 19:47:30 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ void	grab_forks(t_philo *philo);
 void	eat_and_release_forks(t_philo *philo);
 void	print_message(t_philo *philo, char *msg);
 
+/* All philos will start with the same starting time since execution */
+/* of all threads is stopped until all threads are up and running. */
+/* If only one philo is provided, prints message and exits thread. */
+/* When a philo dies, all the life cycle is performed but not printed, */
+/* if required it can be changed adding an if inside the while. */ 
 void	*routine(void *arg)
 {
 	t_philo	*philo;
@@ -43,6 +48,7 @@ void	*routine(void *arg)
 	return (NULL);
 }
 
+/* Prints messages only if there is no dead philosophers */
 void	print_message(t_philo *philo, char *msg)
 {
 	if (philo->info->dead == 0)
@@ -54,6 +60,8 @@ void	print_message(t_philo *philo, char *msg)
 	}
 }
 
+/* Depending on the philo position (even or odd), the forks */
+/* are grab in different order in order to avoid deadlock */
 void	grab_forks(t_philo *philo)
 {
 	if (philo->philo_id % 2 == 0)
@@ -71,6 +79,9 @@ void	grab_forks(t_philo *philo)
 	print_message(philo, "has taken a fork");
 }
 
+/* Forks are released in different order depending if the */
+/* philosopher is even or odd */
+/* TEST, MAYBE NOT NEEDED!!! */
 void	eat_and_release_forks(t_philo *philo)
 {
 	philo->last_meal = get_time_ms();

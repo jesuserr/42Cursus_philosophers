@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:54:38 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/19 19:47:30 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/20 15:15:37 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	*routine(void *arg)
 	return (NULL);
 }
 
-/* Prints messages only if there is no dead philosophers */
+/* Prints messages only if there are no dead philosophers */
 void	print_message(t_philo *philo, char *msg)
 {
 	if (philo->info->dead == 0)
@@ -61,7 +61,7 @@ void	print_message(t_philo *philo, char *msg)
 }
 
 /* Depending on the philo position (even or odd), the forks */
-/* are grab in different order in order to avoid deadlock */
+/* are grabbed in different order to avoid deadlock */
 void	grab_forks(t_philo *philo)
 {
 	if (philo->philo_id % 2 == 0)

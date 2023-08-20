@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:10:29 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/19 18:45:37 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/20 16:14:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,15 @@ int	ft_error_handler(int error, t_info *info)
 	else if (error == ERROR_MEM)
 	{
 		printf ("%sError allocating memory\n", RED);
+		free_memory(info);
+	}
+	else if (error == ERROR_TH)
+	{
+		info->start_time = 1;
+		info->dead = 1;
+		printf ("%sError creating thread\n", RED);
+		join_threads(info);
+		destroy_mutexes(info);
 		free_memory(info);
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:47:49 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/19 19:13:33 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/20 16:14:18 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,13 @@ int	init_threads(t_info *info)
 	info->philos_th = philos;
 	while (i < info->nbr_philos)
 	{
-		pthread_create(&philos[i], NULL, &routine, \
-			(void *) &info->philos_array[i]);
+		if (pthread_create(&philos[i], NULL, &routine, \
+		(void *) &info->philos_array[i]) != 0)
+			return (ft_error_handler(ERROR_TH, info));
 		i++;
 	}
-	pthread_create(&info->monitor, NULL, &monitoring, (void *) info);
+	if (pthread_create(&info->monitor, NULL, &monitoring, (void *) info) != 0)
+		return (ft_error_handler(ERROR_TH, info));
 	pthread_join(info->monitor, NULL);
 	return (0);
 }

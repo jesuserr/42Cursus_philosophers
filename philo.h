@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:55:36 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/19 19:13:33 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/20 15:48:08 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define ERROR_TIMES			3
 # define ERROR_MEALS			4
 # define ERROR_MEM				5
+# define ERROR_TH				6
 
 /*
 ** -.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-
@@ -89,6 +90,8 @@ int		init_mutexes(t_info *info);
 int		init_philos(t_info *info);
 int		init_threads(t_info *info);
 /*		main.c			*/
+void	join_threads(t_info *info);
+void	destroy_mutexes(t_info *info);
 void	free_memory(t_info *info);
 /*		monitor.c		*/
 void	*monitoring(void *arg);

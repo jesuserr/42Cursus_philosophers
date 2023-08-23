@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 21:49:21 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/20 21:49:38 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/23 01:03:30 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,31 @@
 # define ERROR_MEALS			4
 # define ERROR_MEM				5
 # define ERROR_TH				6
+# define ERROR_SEM				7
+# define ERROR_PID				8
+# define MAX_PHILOS				200
+# define MIN_TIME				60
 
 /*
 ** -.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-
 **                              HEADERS
 */
-# include <unistd.h>    // for write
-# include <stdlib.h>    // for malloc
+# include <unistd.h>    // for usleep
+# include <stdlib.h>    // for malloc & free
 # include <limits.h>	// for INT_MAX && INT_MIN
 # include <stddef.h>	// for NULL
 # include <stdio.h>		// for printf
 # include <pthread.h>	// for threads
 # include <sys/time.h>  // for timer
+# include <semaphore.h>	// for semaphores
+# include <sys/stat.h>	// for sem_open modes
+# include <fcntl.h>		// for sem_open modes
+# include <signal.h>	// for kill
 
 /*
 ** -.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-
 **                              STRUCT DECLARATIONS
 */
-struct	s_philo;
-
 typedef struct s_info
 {
 	int				nbr_philos;
@@ -57,25 +63,17 @@ typedef struct s_info
 	int				total_meals;
 	long			start_time;
 	int				dead;
-	int				active_threads;
-	pthread_mutex_t	*forks_mtx;
-	pthread_mutex_t	print_mtx;
-	pthread_mutex_t	start_mtx;
-	pthread_mutex_t	meals_mtx;
-	struct s_philo	*philos_array;
-	pthread_t		*philos_th;
+	int				active_processes;
+	sem_t			*forks_sem;
+	sem_t			*print_sem;
+	sem_t			*start_sem;
+	sem_t			*meals_sem;
+	pid_t			*pid_philos;
 	pthread_t		monitor;
-}				t_info;
-
-typedef struct s_philo
-{
 	int				philo_id;
 	int				meals;
 	long			last_meal;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
-	struct s_info	*info;
-}				t_philo;
+}				t_info;
 
 /*
 ** -.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-
@@ -83,16 +81,16 @@ typedef struct s_philo
 */
 /*		errors.c		*/
 int		ft_error_handler(int error, t_info *info);
+int		ft_error_handler_sem(int error, t_info *info);
 int		check_args(int argc, char **argv);
 /*		inits.c			*/
-void	init_info(int argc, char **argv, t_info *info);
-int		init_mutexes(t_info *info);
-int		init_philos(t_info *info);
-int		init_threads(t_info *info);
+int		init_info(int argc, char **argv, t_info *info);
+int		init_semaphores(t_info *info);
+int		init_monitor(t_info *info);
+int		init_processes(t_info *info);
 /*		main.c			*/
 void	join_threads(t_info *info);
-void	destroy_mutexes(t_info *info);
-void	free_memory(t_info *info);
+void	close_semaphores(t_info *info);
 /*		monitor.c		*/
 void	*monitoring(void *arg);
 /*		routine.c		*/

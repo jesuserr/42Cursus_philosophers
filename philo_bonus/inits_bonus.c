@@ -6,15 +6,15 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 22:00:16 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/20 22:04:30 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/23 00:59:58 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
 /* Fill in struct 'info' with the data provided by the user and */
-/* initialize values. 'info' will contain all philos as an array */
-void	init_info(int argc, char **argv, t_info *info)
+/* initialize values. ***'info' will contain all philos as an array*** */
+int	init_info(int argc, char **argv, t_info *info)
 {
 	info->nbr_philos = ft_atoi(argv[1]);
 	info->die_time = ft_atoi(argv[2]);
@@ -24,83 +24,73 @@ void	init_info(int argc, char **argv, t_info *info)
 		info->max_meals = ft_atoi(argv[5]);
 	else
 		info->max_meals = INT_MAX;
-	info->forks_mtx = NULL;
-	info->philos_array = NULL;
-	info->philos_th = NULL;
+	info->pid_philos = malloc(sizeof(pid_t) * info->nbr_philos);
+	if (!info->pid_philos)
+		return (ft_error_handler(ERROR_MEM, info));
 	info->total_meals = 0;
 	info->dead = 0;
-	info->active_threads = 0;
+	info->active_processes = 0;
 	info->start_time = 0;
-}
-
-/* Init an array of mutexes (one per fork) */
-/* Init also mutexes for printing, starting and counting total meals */
-int	init_mutexes(t_info *info)
-{
-	int				i;
-	pthread_mutex_t	*mutex;
-
-	i = 0;
-	mutex = malloc(sizeof(pthread_mutex_t) * info->nbr_philos);
-	if (!mutex)
-		return (ft_error_handler(ERROR_MEM, info));
-	while (i < info->nbr_philos)
-	{
-		pthread_mutex_init(&mutex[i], NULL);
-		i++;
-	}
-	info->forks_mtx = mutex;
-	pthread_mutex_init(&info->print_mtx, NULL);
-	pthread_mutex_init(&info->start_mtx, NULL);
-	pthread_mutex_init(&info->meals_mtx, NULL);
+	info->meals = 0;
 	return (0);
 }
 
-/* Init information for each one of the philosophers */
-/* Each philo contains a pointer to the 'info' struct */
-int	init_philos(t_info *info)
+/* Init semaphores for number of forks, printing, starting and */
+/* counting total meals */
+int	init_semaphores(t_info *info)
 {
-	t_philo	*philos;
-	int		i;
-
-	philos = malloc(sizeof(t_philo) * info->nbr_philos);
-	if (!philos)
-		return (ft_error_handler(ERROR_MEM, info));
-	i = 0;
-	while (i < info->nbr_philos)
-	{
-		philos[i].philo_id = i;
-		philos[i].meals = 0;
-		philos[i].info = info;
-		philos[i].right_fork = &info->forks_mtx[i];
-		philos[i].left_fork = &info->forks_mtx[i + 1];
-		i++;
-	}
-	philos[i - 1].left_fork = &info->forks_mtx[0];
-	info->philos_array = philos;
+	sem_unlink("forks_sem");
+	sem_unlink("print_sem");
+	sem_unlink("start_sem");
+	sem_unlink("meals_sem");
+	info->forks_sem = sem_open("forks_sem", O_CREAT | O_EXCL, S_IRWXU, \
+		info->nbr_philos);
+	if (info->forks_sem == SEM_FAILED)
+		return (ft_error_handler_sem(ERROR_SEM, info));
+	info->print_sem = sem_open("print_sem", O_CREAT | O_EXCL, S_IRWXU, 1);
+	if (info->print_sem == SEM_FAILED)
+		return (ft_error_handler_sem(ERROR_SEM, info));
+	info->start_sem = sem_open("start_sem", O_CREAT | O_EXCL, S_IRWXU, 1);
+	if (info->start_sem == SEM_FAILED)
+		return (ft_error_handler_sem(ERROR_SEM, info));
+	info->meals_sem = sem_open("meals_sem", O_CREAT | O_EXCL, S_IRWXU, 1);
+	if (info->meals_sem == SEM_FAILED)
+		return (ft_error_handler_sem(ERROR_SEM, info));
 	return (0);
 }
 
-/* Initialize an array of threads (one per philo) */
-/* Initialize another thread for monitoring all philos */
-int	init_threads(t_info *info)
+/* Initialize thread for monitoring all philos processes */
+/* int	init_monitor(t_info *info)
 {
-	int			i;
-	pthread_t	*philos;
-
-	i = 0;
-	philos = malloc(sizeof(pthread_t) * info->nbr_philos);
-	if (!philos)
-		return (ft_error_handler(ERROR_MEM, info));
-	info->philos_th = philos;
-	while (i < info->nbr_philos)
-	{
-		//if (pthread_create(&philos[i], NULL, &routine, (void *) &info->philos_array[i]) != 0)
-			return (ft_error_handler(ERROR_TH, info));
-		i++;
-	}
-	//if (pthread_create(&info->monitor, NULL, &monitoring, (void *) info) != 0)
+	if (pthread_create(&info->monitor, NULL, &monitoring, (void *) info) != 0)
 		return (ft_error_handler(ERROR_TH, info));
 	pthread_join(info->monitor, NULL);
+	return (0);
+} */
+
+int	init_processes(t_info *info)
+{
+	int	i;
+
+	i = 0;
+	info->start_time = get_time_ms();
+	while (i < info->nbr_philos)
+	{
+		info->philo_id = i;
+		info->pid_philos[i] = fork();
+		if (info->pid_philos[i] == -1)
+			ft_error_handler_sem(ERROR_PID, info);
+		if (info->pid_philos[i] == 0)
+		{
+			sem_wait(info->print_sem);
+			printf("hello from philo: %d\n", i);
+			printf("%lu\n", info->start_time);
+			sem_post(info->print_sem);
+			sleep (5);
+			return (0);
+		}
+		i++;
+	}
+	printf("hello from parent\n");
 	return (0);
 }

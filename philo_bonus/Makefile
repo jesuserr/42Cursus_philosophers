@@ -16,7 +16,7 @@ NAME_BONUS = philo_bonus
 SRCS =	philo/main.c philo/errors.c philo/utils.c philo/inits.c \
 		philo/routine.c philo/monitor.c
 SRCS_BONUS = main_bonus.c errors_bonus.c \
-			 utils_bonus.c inits_bonus.c
+			 utils_bonus.c inits_bonus.c \
 
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
@@ -28,7 +28,7 @@ RM = rm -f
 CFLAGS = -Wall -Wextra -Werror -pthread
 
 NORM = ${SRCS} philo/philo.h
-NORMB = ${SRCS_BONUS} philo_bonus/philo_bonus.h
+NORMB = ${SRCS_BONUS} philo_bonus.h
 GREEN = "\033[0;92m"
 RED = "\033[0;91m"
 BLUE = "\033[0;94m"

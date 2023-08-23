@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 14:22:07 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/23 16:33:58 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/23 17:37:20 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	print_message(t_info *info, char *msg);
 /* if required it can be changed adding an if inside the while. */ 
 void	*routine(t_info *info)
 {
+	if (info->nbr_philos == 2 && info->philo_id == 1)
+		ft_msleep(1);
 	while (1)
 	{
 		sem_wait(info->forks_sem);

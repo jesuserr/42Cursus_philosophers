@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   monitor.c                                          :+:      :+:    :+:   */
+/*   monitor_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/16 22:43:53 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/19 19:29:03 by codespace        ###   ########.fr       */
+/*   Created: 2023/08/23 14:37:45 by jesuserr          #+#    #+#             */
+/*   Updated: 2023/08/23 15:04:08 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
+
+void	*monitoring(void *arg)
+{
+	t_info	*info;
+
+	info = (t_info *)arg;
+	(void)info;
+	sleep(5);
+	return (NULL);
+}
 
 /* Print mutex remains locked to avoid further printings */
 /* info->dead is the flag that stops everything */
-void	execute_death(t_info *info, int i)
+/* void	execute_death(t_info *info, int i)
 {
 	info->dead = 1;
 	pthread_mutex_lock(&info->print_mtx);
 	printf("%ld %d %s\n", get_time_ms() - info->start_time, \
 	info->philos_array[i].philo_id + 1, "died");
-}
+} */
 
 /* Waits for all the threads to be active in order to apply same starting */
 /* time to all of them. Waits 10 ms before starting monitoring to avoid */
@@ -28,7 +38,7 @@ void	execute_death(t_info *info, int i)
 /* If number of meals are reached, finishes monitoring execution. */
 /* If philosopher dies, activates flag to warn all philo threads, */
 /* prints message and finishes monitoring execution. */
-void	*monitoring(void *arg)
+/* void	*monitoring(void *arg)
 {
 	t_info	*info;
 	int		i;
@@ -56,3 +66,4 @@ void	*monitoring(void *arg)
 	}
 	return (NULL);
 }
+ */

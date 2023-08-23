@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 21:54:19 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/23 00:57:38 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/23 14:58:03 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int	ft_error_handler(int error, t_info *info)
 		printf ("%sError allocating memory\n", RED);
 	else if (error == ERROR_TH)
 	{
-		info->start_time = 1;
-		info->dead = 1;
 		printf ("%sError creating thread\n", RED);
 		close_semaphores(info);
 		free(info->pid_philos);

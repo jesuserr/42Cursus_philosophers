@@ -6,25 +6,11 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 21:48:08 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/23 00:55:47 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/23 15:06:00 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
-
-/* Print info if number of meals have been specified and */
-/* number of philos is greater than 1 and nobody died */
-void	join_threads(t_info *info)
-{
-	if ((info->max_meals > 0 && info->max_meals < INT_MAX) && \
-	(info->nbr_philos > 1) && (info->dead == 0))
-	{
-		sem_wait(info->print_sem);
-		printf("Each philosopher ate: %d times\n", info->max_meals);
-		printf("Total served meals: %d\n", info->total_meals);
-		sem_post(info->print_sem);
-	}
-}
 
 /* Close & unlink all semaphores */
 void	close_semaphores(t_info *info)
@@ -39,6 +25,15 @@ void	close_semaphores(t_info *info)
 	sem_unlink("start_sem");
 }
 
+void	kill_processes(t_info *info)
+{
+	int	i;
+
+	i = 0;
+	while (i < info->nbr_philos)
+		kill(info->pid_philos[i++], SIGKILL);
+}
+
 int	main(int argc, char **argv)
 {
 	t_info	info;
@@ -49,12 +44,12 @@ int	main(int argc, char **argv)
 		return (1);
 	if (init_semaphores(&info))
 		return (1);
+	if (init_overall_monitor(&info))
+		return (1);
 	if (init_processes(&info))
 		return (1);
-	//if (init_monitor(&info))
-	//	return (1);
-	//join_threads(&info);
 	close_semaphores(&info);
+	kill_processes(&info);
 	free(info.pid_philos);
 	return (0);
 }

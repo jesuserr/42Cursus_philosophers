@@ -17,6 +17,7 @@ SRCS =	philo/main.c philo/errors.c philo/utils.c philo/inits.c \
 		philo/routine.c philo/monitor.c
 SRCS_BONUS = main_bonus.c errors_bonus.c \
 			 utils_bonus.c inits_bonus.c \
+			 routine_bonus.c monitor_bonus.c
 
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)

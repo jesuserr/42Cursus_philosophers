@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 21:48:08 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/23 15:06:00 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/23 15:55:51 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	close_semaphores(t_info *info)
 	sem_unlink("forks_sem");
 	sem_close(info->meals_sem);
 	sem_unlink("meals_sem");
-	sem_close(info->start_sem);
-	sem_unlink("start_sem");
+	sem_close(info->dead_sem);
+	sem_unlink("dead_sem");
 }
 
 void	kill_processes(t_info *info)

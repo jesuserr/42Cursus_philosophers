@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 14:22:07 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/23 15:02:19 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/23 16:33:58 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	print_message(t_info *info, char *msg);
 /* if required it can be changed adding an if inside the while. */ 
 void	*routine(t_info *info)
 {
-	info->last_meal = info->start_time;
 	while (1)
 	{
 		sem_wait(info->forks_sem);
@@ -47,7 +46,8 @@ void	print_message(t_info *info, char *msg)
 	if (info->dead == 0)
 	{
 		sem_wait(info->print_sem);
-		printf("%ld %d %s\n", get_time_ms() - info->start_time, info->philo_id + 1, msg);
+		printf("%ld %d %s\n", get_time_ms() - info->start_time, \
+			info->philo_id + 1, msg);
 		sem_post(info->print_sem);
 	}
 }

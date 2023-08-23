@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 21:49:21 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/23 15:01:00 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/23 15:51:42 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_info
 	int				active_processes;
 	sem_t			*forks_sem;
 	sem_t			*print_sem;
-	sem_t			*start_sem;
+	sem_t			*dead_sem;
 	sem_t			*meals_sem;
 	pid_t			*pid_philos;
 	pthread_t		gen_monitor;
@@ -93,7 +93,8 @@ int		init_processes(t_info *info);
 void	close_semaphores(t_info *info);
 void	kill_processes(t_info *info);
 /*		monitor.c		*/
-void	*monitoring(void *arg);
+void	*overall_monitor(void *arg);
+void	*pid_monitor(void *arg);
 /*		routine.c		*/
 void	*routine(t_info *info);
 /*		utils.c			*/

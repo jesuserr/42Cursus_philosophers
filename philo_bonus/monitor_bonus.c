@@ -6,19 +6,37 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 14:37:45 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/23 15:04:08 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/23 16:33:16 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	*monitoring(void *arg)
+void	*overall_monitor(void *arg)
 {
 	t_info	*info;
 
 	info = (t_info *)arg;
-	(void)info;
-	sleep(5);
+	sem_wait(info->dead_sem);
+	return (NULL);
+}
+
+void	*pid_monitor(void *arg)
+{
+	t_info	*info;
+
+	info = (t_info *)arg;
+	while (info->dead == 0)
+	{
+		if ((get_time_ms() - info->last_meal) > info->die_time)
+		{
+			info->dead = 1;
+			sem_wait(info->print_sem);
+			printf("%ld %d %s\n", get_time_ms() - info->start_time, \
+				info->philo_id + 1, "died");
+			sem_post(info->dead_sem);
+		}
+	}
 	return (NULL);
 }
 

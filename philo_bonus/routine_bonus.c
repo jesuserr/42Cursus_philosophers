@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 14:22:07 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/24 17:41:13 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/24 21:45:50 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	*routine(t_info *info)
 {
 	if (info->philo_id % 2 == 0)
 		ft_msleep(2);
-	while (info->dead == 0)
+	while (1)
 	{
 		sem_wait(info->forks_sem);
 		print_message(info, "has taken a fork");
@@ -40,7 +40,6 @@ void	*routine(t_info *info)
 		print_message(info, "is thinking");
 		if (info->meals == info->max_meals)
 		{
-			info->dead = 1;
 			sem_post(info->meals_sem);
 			exit(0);
 		}
@@ -51,11 +50,8 @@ void	*routine(t_info *info)
 /* Prints messages only if there are no dead philosophers */
 void	print_message(t_info *info, char *msg)
 {
-	if (info->dead == 0)
-	{
-		sem_wait(info->print_sem);
-		printf("%ld %d %s\n", get_time_ms() - info->start_time, \
-			info->philo_id + 1, msg);
-		sem_post(info->print_sem);
-	}
+	sem_wait(info->print_sem);
+	printf("%ld %d %s\n", get_time_ms() - info->start_time, \
+		info->philo_id + 1, msg);
+	sem_post(info->print_sem);
 }

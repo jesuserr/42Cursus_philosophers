@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 21:49:21 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/24 21:27:03 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/24 21:51:57 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ typedef struct s_info
 	int				eat_time;
 	int				sleep_time;
 	int				max_meals;
-	long			start_time;
-	int				dead;
+	long			start_time;	
 	sem_t			*forks_sem;
 	sem_t			*print_sem;
 	sem_t			*dead_sem;

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 22:00:16 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/23 16:39:18 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/24 17:40:57 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,7 @@ int	init_info(int argc, char **argv, t_info *info)
 	info->pid_philos = malloc(sizeof(pid_t) * info->nbr_philos);
 	if (!info->pid_philos)
 		return (ft_error_handler(ERROR_MEM, info));
-	info->total_meals = 0;
 	info->dead = 0;
-	info->active_processes = 0;
 	info->start_time = 0;
 	info->meals = 0;
 	info->last_meal = 0;
@@ -58,6 +56,7 @@ int	init_semaphores(t_info *info)
 	if (info->meals_sem == SEM_FAILED)
 		return (ft_error_handler_sem(ERROR_SEM, info));
 	sem_wait(info->dead_sem);
+	sem_wait(info->meals_sem);
 	return (0);
 }
 
@@ -91,6 +90,7 @@ int	init_processes(t_info *info)
 		}
 		i++;
 	}
+	sem_wait(info->dead_sem);
 	pthread_join(info->gen_monitor, NULL);
 	return (0);
 }

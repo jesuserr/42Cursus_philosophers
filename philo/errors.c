@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:10:29 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/20 16:14:00 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/24 17:54:33 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ int	check_args(int argc, char **argv)
 				return (ft_error_handler(ERROR_FORMAT, NULL));
 		if (ft_atoi(argv[j]) > INT_MAX)
 			return (ft_error_handler(ERROR_FORMAT, NULL));
-		if (ft_atoi(argv[j]) < 1 && j == 1)
+		if ((ft_atoi(argv[j]) < 1 || ft_atoi(argv[j]) > MAX_PHILOS) && j == 1)
 			return (ft_error_handler(ERROR_PHILO, NULL));
-		if (ft_atoi(argv[j]) < 60 && (j >= 2 && j <= 4))
+		if (ft_atoi(argv[j]) < MIN_TIME && (j >= 2 && j <= 4))
 		{
 			printf ("%sArgument %d ", RED, j);
 			return (ft_error_handler(ERROR_TIMES, NULL));

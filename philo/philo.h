@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:55:36 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/20 15:48:08 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/24 17:51:53 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # define ERROR_MEALS			4
 # define ERROR_MEM				5
 # define ERROR_TH				6
+# define MAX_PHILOS				200
+# define MIN_TIME				60
 
 /*
 ** -.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-

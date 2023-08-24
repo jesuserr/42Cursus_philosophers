@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 21:49:21 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/23 15:51:42 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/24 17:40:25 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,8 @@ typedef struct s_info
 	int				eat_time;
 	int				sleep_time;
 	int				max_meals;
-	int				total_meals;
 	long			start_time;
 	int				dead;
-	int				active_processes;
 	sem_t			*forks_sem;
 	sem_t			*print_sem;
 	sem_t			*dead_sem;
@@ -80,24 +78,24 @@ typedef struct s_info
 ** -.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-.-'-
 **                              FUNCTION PROTOTYPES
 */
-/*		errors.c		*/
+/*		errors_bonus.c		*/
 int		ft_error_handler(int error, t_info *info);
 int		ft_error_handler_sem(int error, t_info *info);
 int		check_args(int argc, char **argv);
-/*		inits.c			*/
+/*		inits_bonus.c		*/
 int		init_info(int argc, char **argv, t_info *info);
 int		init_semaphores(t_info *info);
 int		init_overall_monitor(t_info *info);
 int		init_processes(t_info *info);
-/*		main.c			*/
+/*		main_bonus.c		*/
 void	close_semaphores(t_info *info);
 void	kill_processes(t_info *info);
-/*		monitor.c		*/
+/*		monitor_bonus.c		*/
 void	*overall_monitor(void *arg);
 void	*pid_monitor(void *arg);
-/*		routine.c		*/
+/*		routine_bonus.c		*/
 void	*routine(t_info *info);
-/*		utils.c			*/
+/*		utils_bonus.c		*/
 long	ft_atoi(const char *str);
 int		ft_is_digit(char c);
 long	get_time_ms(void);

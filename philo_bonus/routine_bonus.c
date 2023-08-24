@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 14:22:07 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/23 17:37:20 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/24 17:41:13 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	print_message(t_info *info, char *msg);
 /* if required it can be changed adding an if inside the while. */ 
 void	*routine(t_info *info)
 {
-	if (info->nbr_philos == 2 && info->philo_id == 1)
-		ft_msleep(1);
-	while (1)
+	if (info->philo_id % 2 == 0)
+		ft_msleep(2);
+	while (info->dead == 0)
 	{
 		sem_wait(info->forks_sem);
 		print_message(info, "has taken a fork");
@@ -38,6 +38,12 @@ void	*routine(t_info *info)
 		print_message(info, "is sleeping");
 		ft_msleep(info->sleep_time);
 		print_message(info, "is thinking");
+		if (info->meals == info->max_meals)
+		{
+			info->dead = 1;
+			sem_post(info->meals_sem);
+			exit(0);
+		}
 	}
 	return (NULL);
 }

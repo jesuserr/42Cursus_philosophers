@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 14:37:45 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/23 23:33:49 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/24 21:27:37 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,17 @@ void	*pid_monitor(void *arg)
 			printf("%ld %d %s\n", get_time_ms() - info->start_time, \
 				info->philo_id + 1, "died");
 			sem_post(info->dead_sem);
+			kill_processes(info);
 		}
 	}
 	return (NULL);
+}
+
+void	kill_processes(t_info *info)
+{
+	int	i;
+
+	i = 0;
+	while (i < info->nbr_philos)
+		kill(info->pid_philos[i++], SIGINT);
 }

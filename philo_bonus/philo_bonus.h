@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 21:49:21 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/24 17:40:25 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/24 21:27:03 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,10 @@ int		init_overall_monitor(t_info *info);
 int		init_processes(t_info *info);
 /*		main_bonus.c		*/
 void	close_semaphores(t_info *info);
-void	kill_processes(t_info *info);
 /*		monitor_bonus.c		*/
 void	*overall_monitor(void *arg);
 void	*pid_monitor(void *arg);
+void	kill_processes(t_info *info);
 /*		routine_bonus.c		*/
 void	*routine(t_info *info);
 /*		utils_bonus.c		*/

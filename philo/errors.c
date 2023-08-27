@@ -6,7 +6,7 @@
 /*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:10:29 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/27 22:32:05 by jesuserr         ###   ########.fr       */
+/*   Updated: 2023/08/27 22:48:15 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	ft_error_handler(int error, t_info *info)
 	}
 	else if (error == ERROR_TH)
 	{
+		info->start_time = 1;
 		info->dead = 1;
 		printf ("%sError creating thread\n", RED);
 		join_threads(info);

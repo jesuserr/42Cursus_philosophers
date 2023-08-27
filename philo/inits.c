@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inits.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:47:49 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/20 16:14:18 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/27 22:06:00 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	init_philos(t_info *info)
 
 /* Initialize an array of threads (one per philo) */
 /* Initialize another thread for monitoring all philos */
+/* Main process waits until completion of monitor thread */
 int	init_threads(t_info *info)
 {
 	int			i;

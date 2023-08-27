@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:43:53 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/19 19:29:03 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/27 22:33:34 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	*monitoring(void *arg)
 		{
 			if (info->total_meals == (info->nbr_philos * info->max_meals))
 				return (NULL);
-			if ((get_time_ms() - info->philos_array[i].last_meal) > \
-			info->die_time)
+			if (((get_time_ms() - info->philos_array[i].last_meal) > \
+			info->die_time) && (info->philos_array[i].meals != info->max_meals))
 			{
 				execute_death(info, i);
 				break ;

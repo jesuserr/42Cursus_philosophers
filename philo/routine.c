@@ -6,7 +6,7 @@
 /*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:54:38 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/26 23:54:57 by jesuserr         ###   ########.fr       */
+/*   Updated: 2023/08/27 22:17:10 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,26 +79,20 @@ void	grab_forks(t_philo *philo)
 	print_message(philo, "has taken a fork");
 }
 
-/* Forks are released in different order depending if the */
-/* philosopher is even or odd */
-/* TEST, MAYBE NOT NEEDED!!! */
+/* Forks are always released in the same order, no matter how they */
+/* were taken. To optimize the code the meal time is captured just */
+/* before eating and the forks are released asap. Note: Counters are */
+/* updated at the end but maybe it would be even better to do it after */
+/* thinking */
 void	eat_and_release_forks(t_philo *philo)
 {
-	philo->last_meal = get_time_ms();
 	print_message(philo, "is eating");
+	philo->last_meal = get_time_ms();
 	ft_msleep(philo->info->eat_time);
+	pthread_mutex_unlock(philo->right_fork);
+	pthread_mutex_unlock(philo->left_fork);
+	philo->meals++;
 	pthread_mutex_lock(&philo->info->meals_mtx);
 	philo->info->total_meals++;
 	pthread_mutex_unlock(&philo->info->meals_mtx);
-	philo->meals++;
-	if (philo->philo_id % 2 == 0)
-	{
-		pthread_mutex_unlock(philo->right_fork);
-		pthread_mutex_unlock(philo->left_fork);
-	}
-	else
-	{
-		pthread_mutex_unlock(philo->left_fork);
-		pthread_mutex_unlock(philo->right_fork);
-	}
 }

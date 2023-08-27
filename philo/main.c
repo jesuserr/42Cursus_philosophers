@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:05:04 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/19 19:13:33 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/27 22:05:23 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,26 +83,3 @@ int	main(int argc, char **argv)
 	free_memory(&info);
 	return (0);
 }
-
-/*
-printf("\n%p", &mutex[i]);
-printf("\n%p", &info->print_mtx);
-unsigned long a = get_time_ms();
-	unsigned long b = get_time_us();
-	//printf("\n%lu", get_time());
-	//printf("%d", info.philos_array->philo_id);
-	//printf("%d", info.philos_array[5].philo_id);
-	//usleep(100000);
-	usleep(10000);
-	printf("\n%lu ms\n", get_time_ms() - a);
-	printf("\n%lu us\n", get_time_us() - b);
-	printf("\n%ld: ", info.philos_array[0].last_meal);
-	printf("\n%ld: ", info.philos_array[9].last_meal);
-	make && valgrind --leak-check=full -s ./philo 100 60 60 60 56
-
-	long a = get_time_ms();
-	//ft_usleep(333);
-	//ft_msleep(5);
-	usleep(5000);
-	printf("%lu", get_time_ms() - a);
-*/

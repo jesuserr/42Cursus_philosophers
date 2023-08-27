@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 21:49:21 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/24 21:51:57 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/26 23:42:12 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_info
 	sem_t			*dead_sem;
 	sem_t			*meals_sem;
 	pid_t			*pid_philos;
-	pthread_t		gen_monitor;
+	pthread_t		meals_monitor;
 	pthread_t		pid_monitor;
 	int				philo_id;
 	int				meals;
@@ -84,14 +84,14 @@ int		check_args(int argc, char **argv);
 /*		inits_bonus.c		*/
 int		init_info(int argc, char **argv, t_info *info);
 int		init_semaphores(t_info *info);
-int		init_overall_monitor(t_info *info);
+int		init_meals_monitor(t_info *info);
 int		init_processes(t_info *info);
 /*		main_bonus.c		*/
 void	close_semaphores(t_info *info);
-/*		monitor_bonus.c		*/
-void	*overall_monitor(void *arg);
-void	*pid_monitor(void *arg);
 void	kill_processes(t_info *info);
+/*		monitor_bonus.c		*/
+void	*nbr_meals_monitor(void *arg);
+void	*pid_monitor(void *arg);
 /*		routine_bonus.c		*/
 void	*routine(t_info *info);
 /*		utils_bonus.c		*/

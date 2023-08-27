@@ -3,34 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   monitor_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 14:37:45 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/24 21:45:58 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/27 12:51:24 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	*overall_monitor(void *arg)
+/* Receives a notification from "meals_sem" every time a philosopher has */
+/* reached the number of required meals. Once all philosophers have eaten */
+/* the required times, activates "dead_sem" and dies */
+void	*nbr_meals_monitor(void *arg)
 {
 	t_info	*info;
 	int		i;
 
 	info = (t_info *)arg;
 	i = 0;
-	if (info->max_meals > 0 && info->max_meals < INT_MAX)
+	while (i < info->nbr_philos)
 	{
-		while (i < info->nbr_philos)
-		{
-			sem_wait(info->meals_sem);
-			i++;
-		}
-		sem_post(info->dead_sem);
+		sem_wait(info->meals_sem);
+		i++;
 	}
+	sem_post(info->dead_sem);
 	return (NULL);
 }
 
+/* Detects when the associated philosopher has died from starvation and */
+/* then activates "dead_sem" and dies. Locks the print semaphore to avoid */
+/* further printing from another processes */
 void	*pid_monitor(void *arg)
 {
 	t_info	*info;
@@ -44,18 +47,8 @@ void	*pid_monitor(void *arg)
 			printf("%ld %d %s\n", get_time_ms() - info->start_time, \
 				info->philo_id + 1, "died");
 			sem_post(info->dead_sem);
-			kill_processes(info);
 			break ;
 		}
 	}
 	return (NULL);
-}
-
-void	kill_processes(t_info *info)
-{
-	int	i;
-
-	i = 0;
-	while (i < info->nbr_philos)
-		kill(info->pid_philos[i++], SIGINT);
 }

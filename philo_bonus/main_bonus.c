@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 21:48:08 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/24 21:27:15 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/27 13:25:03 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,17 @@ void	close_semaphores(t_info *info)
 	sem_unlink("dead_sem");
 }
 
+/* Kills all child processes. SIGTERM preferred over SIGKILL since it */
+/* kills the process politely */
+void	kill_processes(t_info *info)
+{
+	int	i;
+
+	i = 0;
+	while (i < info->nbr_philos)
+		kill(info->pid_philos[i++], SIGTERM);
+}
+
 int	main(int argc, char **argv)
 {
 	t_info	info;
@@ -35,13 +46,12 @@ int	main(int argc, char **argv)
 		return (1);
 	if (init_semaphores(&info))
 		return (1);
-	if (init_overall_monitor(&info))
+	if (init_meals_monitor(&info))
 		return (1);
 	if (init_processes(&info))
 		return (1);
+	kill_processes(&info);
 	close_semaphores(&info);
 	free(info.pid_philos);
 	return (0);
 }
-
-// make bonus && valgrind --leak-check=full -s ./philo_bonus 6 60 60 60 56

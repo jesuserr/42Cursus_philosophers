@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 14:22:07 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/24 21:45:50 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/27 13:08:25 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	print_message(t_info *info, char *msg);
 
-/* All philos will start with the same starting time since execution */
-/* of all threads is stopped until all threads are up and running. */
-/* If only one philo is provided, prints message and exits thread. */
-/* When a philo dies, all the life cycle is performed but not printed, */
-/* if required it can be changed adding an if inside the while. */ 
+/* Introduces a small delay on even philosophers to avoid deadlocks. */
+/* Routine runs forever until the process is killed in the main program or */
+/* the number of meals are reached and then exits. */
+/* When meals are reached, pilosophers are left in 'thinking' state, this */
+/* can be modified changing the position of the if */
 void	*routine(t_info *info)
 {
 	if (info->philo_id % 2 == 0)
@@ -47,7 +47,6 @@ void	*routine(t_info *info)
 	return (NULL);
 }
 
-/* Prints messages only if there are no dead philosophers */
 void	print_message(t_info *info, char *msg)
 {
 	sem_wait(info->print_sem);

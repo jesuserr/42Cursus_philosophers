@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:54:38 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/20 15:15:37 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/26 23:54:57 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	print_message(t_philo *philo, char *msg);
 /* of all threads is stopped until all threads are up and running. */
 /* If only one philo is provided, prints message and exits thread. */
 /* When a philo dies, all the life cycle is performed but not printed, */
-/* if required it can be changed adding an if inside the while. */ 
+/* if required it can be changed adding an if inside the while. */
 void	*routine(void *arg)
 {
 	t_philo	*philo;

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   inits_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 22:00:16 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/24 21:42:53 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/27 13:23:38 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-/* Fill in struct 'info' with the data provided by the user and */
-/* initialize values. */
+/* Fills struct 'info' with the data provided by the user and initializes */
+/* all the values. Allocates memory to contain a pid for each philosopher */
 int	init_info(int argc, char **argv, t_info *info)
 {
 	info->nbr_philos = ft_atoi(argv[1]);
@@ -23,7 +23,7 @@ int	init_info(int argc, char **argv, t_info *info)
 	if (argc == 6)
 		info->max_meals = ft_atoi(argv[5]);
 	else
-		info->max_meals = INT_MAX;
+		info->max_meals = -1;
 	info->pid_philos = malloc(sizeof(pid_t) * info->nbr_philos);
 	if (!info->pid_philos)
 		return (ft_error_handler(ERROR_MEM, info));
@@ -33,8 +33,9 @@ int	init_info(int argc, char **argv, t_info *info)
 	return (0);
 }
 
-/* Init semaphores for number of forks, printing, starting and */
-/* counting total meals */
+/* Inits semaphores for number of forks (same number as philosophers), */
+/* printing, death detection and counting number of meals. The last two */
+/* semaphores are "set to zero" */
 int	init_semaphores(t_info *info)
 {
 	sem_unlink("forks_sem");
@@ -59,14 +60,26 @@ int	init_semaphores(t_info *info)
 	return (0);
 }
 
-int	init_overall_monitor(t_info *info)
+/* If number of meals are provided, it creates a thread to control it. */
+/* Detaching the thread allows that when the thread terminates, its */
+/* resources are automatically released back to the system without the need */
+/* for another thread to join with the terminated thread */
+int	init_meals_monitor(t_info *info)
 {
-	if (pthread_create(&info->gen_monitor, NULL, &overall_monitor, \
-		(void *) info) != 0)
-		return (ft_error_handler(ERROR_TH, info));
+	if (info->max_meals > 0)
+	{
+		if (pthread_create(&info->meals_monitor, NULL, &nbr_meals_monitor, \
+			(void *) info) != 0)
+			return (ft_error_handler(ERROR_TH, info));
+		pthread_detach(info->meals_monitor);
+	}
 	return (0);
 }
 
+/* It creates a process per each philosopher, the process contains a thread */
+/* to control the death of the philosopher and the philosopher life routine. */
+/* Main process waits until a notification is received from "dead_sem" */
+/* Thread and routine are never back */
 int	init_processes(t_info *info)
 {
 	int	i;
@@ -85,14 +98,11 @@ int	init_processes(t_info *info)
 			if (pthread_create(&info->pid_monitor, NULL, &pid_monitor, \
 				(void *) info) != 0)
 				return (ft_error_handler(ERROR_TH, info));
+			pthread_detach(info->pid_monitor);
 			routine(info);
 		}
 		i++;
 	}
 	sem_wait(info->dead_sem);
-	pthread_join(info->gen_monitor, NULL);
 	return (0);
 }
-
-// mirar como limpiar en caso de que falle la creación del 'n' 
-// hilo en pid_monitor (movida)

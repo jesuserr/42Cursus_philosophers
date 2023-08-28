@@ -6,15 +6,14 @@
 /*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:05:04 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/27 22:05:23 by jesuserr         ###   ########.fr       */
+/*   Updated: 2023/08/28 12:18:09 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /* Wait for finalization of all the threads */
-/* Print info if number of meals have been specified and */
-/* number of philos is greater than 1 and nobody died */
+/* Print info if number of meals have been specified and nobody died */
 void	join_threads(t_info *info)
 {
 	int	i;
@@ -25,8 +24,7 @@ void	join_threads(t_info *info)
 		pthread_join(info->philos_th[i], NULL);
 		i++;
 	}
-	if ((info->max_meals > 0 && info->max_meals < INT_MAX) && \
-	(info->nbr_philos > 1) && (info->dead == 0))
+	if ((info->max_meals != INT_MAX) && (info->dead == 0))
 	{
 		pthread_mutex_lock(&info->print_mtx);
 		printf("Each philosopher ate: %d times\n", info->max_meals);

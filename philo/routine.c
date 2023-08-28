@@ -6,14 +6,13 @@
 /*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:54:38 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/27 22:17:10 by jesuserr         ###   ########.fr       */
+/*   Updated: 2023/08/28 12:53:06 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	grab_forks(t_philo *philo);
-void	eat_and_release_forks(t_philo *philo);
+void	grab_forks_eat_and_release_forks(t_philo *philo);
 void	print_message(t_philo *philo, char *msg);
 
 /* All philos will start with the same starting time since execution */
@@ -39,8 +38,7 @@ void	*routine(void *arg)
 	}
 	while (philo->info->dead == 0 && philo->meals < philo->info->max_meals)
 	{
-		grab_forks(philo);
-		eat_and_release_forks(philo);
+		grab_forks_eat_and_release_forks(philo);
 		print_message(philo, "is sleeping");
 		ft_msleep(philo->info->sleep_time);
 		print_message(philo, "is thinking");
@@ -48,21 +46,13 @@ void	*routine(void *arg)
 	return (NULL);
 }
 
-/* Prints messages only if there are no dead philosophers */
-void	print_message(t_philo *philo, char *msg)
-{
-	if (philo->info->dead == 0)
-	{
-		pthread_mutex_lock(&philo->info->print_mtx);
-		printf("%ld %d %s\n", get_time_ms() - philo->info->start_time, \
-			philo->philo_id + 1, msg);
-		pthread_mutex_unlock(&philo->info->print_mtx);
-	}
-}
-
-/* Depending on the philo position (even or odd), the forks */
-/* are grabbed in different order to avoid deadlock */
-void	grab_forks(t_philo *philo)
+/* Depending on the philo position (even or odd), the forks are grabbed */
+/* in different order to avoid deadlock. Forks are always released in the */
+/* same order, no matter how they were taken. */
+/* To optimize the code the last meal time is captured just before eating */
+/* and the forks are released asap. Meal counters are only updated if */
+/* number of meals has been provided by the user (to save time) */
+void	grab_forks_eat_and_release_forks(t_philo *philo)
 {
 	if (philo->philo_id % 2 == 0)
 	{
@@ -77,22 +67,28 @@ void	grab_forks(t_philo *philo)
 		pthread_mutex_lock(philo->left_fork);
 	}
 	print_message(philo, "has taken a fork");
-}
-
-/* Forks are always released in the same order, no matter how they */
-/* were taken. To optimize the code the meal time is captured just */
-/* before eating and the forks are released asap. Note: Counters are */
-/* updated at the end but maybe it would be even better to do it after */
-/* thinking */
-void	eat_and_release_forks(t_philo *philo)
-{
 	print_message(philo, "is eating");
 	philo->last_meal = get_time_ms();
 	ft_msleep(philo->info->eat_time);
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
-	philo->meals++;
-	pthread_mutex_lock(&philo->info->meals_mtx);
-	philo->info->total_meals++;
-	pthread_mutex_unlock(&philo->info->meals_mtx);
+	if (philo->info->max_meals != INT_MAX)
+	{
+		philo->meals++;
+		pthread_mutex_lock(&philo->info->meals_mtx);
+		philo->info->total_meals++;
+		pthread_mutex_unlock(&philo->info->meals_mtx);
+	}
+}
+
+/* Prints messages only if there are no dead philosophers */
+void	print_message(t_philo *philo, char *msg)
+{
+	if (philo->info->dead == 0)
+	{
+		pthread_mutex_lock(&philo->info->print_mtx);
+		printf("%ld %d %s\n", get_time_ms() - philo->info->start_time, \
+			philo->philo_id + 1, msg);
+		pthread_mutex_unlock(&philo->info->print_mtx);
+	}
 }

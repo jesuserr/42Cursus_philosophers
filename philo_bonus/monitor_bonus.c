@@ -6,7 +6,7 @@
 /*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 14:37:45 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/27 12:51:24 by jesuserr         ###   ########.fr       */
+/*   Updated: 2023/08/28 17:40:27 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	*nbr_meals_monitor(void *arg)
 }
 
 /* Detects when the associated philosopher has died from starvation and */
-/* then activates "dead_sem" and dies. Locks the print semaphore to avoid */
-/* further printing from another processes */
+/* then activates "dead_sem" and dies. Keeps the print semaphore locked to */
+/* avoid further printing from another processes */
 void	*pid_monitor(void *arg)
 {
 	t_info	*info;

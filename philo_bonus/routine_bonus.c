@@ -6,7 +6,7 @@
 /*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 14:22:07 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/27 13:08:25 by jesuserr         ###   ########.fr       */
+/*   Updated: 2023/08/28 18:29:06 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	*routine(t_info *info)
 		print_message(info, "has taken a fork");
 		sem_wait(info->forks_sem);
 		print_message(info, "has taken a fork");
-		info->last_meal = get_time_ms();
 		print_message(info, "is eating");
+		info->last_meal = get_time_ms();
 		ft_msleep(info->eat_time);
 		info->meals++;
 		sem_post(info->forks_sem);

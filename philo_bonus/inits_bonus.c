@@ -6,7 +6,7 @@
 /*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 22:00:16 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/27 13:23:38 by jesuserr         ###   ########.fr       */
+/*   Updated: 2023/08/28 17:35:59 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	init_semaphores(t_info *info)
 }
 
 /* If number of meals are provided, it creates a thread to control it. */
-/* Detaching the thread allows that when the thread terminates, its */
+/* Detaching the thread allows that after thread termination, its */
 /* resources are automatically released back to the system without the need */
 /* for another thread to join with the terminated thread */
 int	init_meals_monitor(t_info *info)

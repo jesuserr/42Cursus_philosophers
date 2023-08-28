@@ -6,7 +6,7 @@
 /*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 21:54:19 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/27 11:57:56 by jesuserr         ###   ########.fr       */
+/*   Updated: 2023/08/28 17:38:24 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	check_args(int argc, char **argv)
 	if (argc < 5 || argc > 6)
 		return (ft_error_handler(ERROR_ARGS, NULL));
 	j = 0;
-	while (++j <= argc - 1)
+	while (++j < argc)
 	{
 		i = 0;
 		while (argv[j][i] != '\0')

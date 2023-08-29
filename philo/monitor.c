@@ -6,7 +6,7 @@
 /*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 22:43:53 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/28 12:41:06 by jesuserr         ###   ########.fr       */
+/*   Updated: 2023/08/29 12:44:21 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	execute_death(t_info *info, int i)
 }
 
 /* Waits for all the threads to be active in order to apply same starting */
-/* time to all of them. Waits 5 ms before starting monitoring to avoid */
+/* time to all of them. Waits 60 ms before starting monitoring to avoid */
 /* false positives. */
 /* If number of meals are reached, finishes monitoring execution. */
 /* If philosopher dies, activates flag to warn all philo threads, */
@@ -37,7 +37,7 @@ void	*monitoring(void *arg)
 	while (info->active_threads != info->nbr_philos)
 		ft_msleep(1);
 	info->start_time = get_time_ms();
-	ft_msleep(5);
+	ft_msleep(60);
 	while (info->dead == 0)
 	{
 		i = 0;

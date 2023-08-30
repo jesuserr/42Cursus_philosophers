@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 16:43:03 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/19 18:39:38 by codespace        ###   ########.fr       */
+/*   Updated: 2023/08/30 20:30:09 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,24 @@ long	get_time_ms(void)
 	return ((start.tv_sec * 1000) + (start.tv_usec / 1000));
 }
 
-void	ft_msleep(long milisecs)
+/* BUGGY - Project was evaluated with this function but is quite unstable. */
+/* It seems that making so many calls to the usleep function makes everything */
+/* unstable. Function has been rewritten to make less calls to usleep */
+/* void	ft_msleep(long milisecs)
 {
 	long	start;
 
 	start = get_time_ms();
 	while ((get_time_ms() - start) < milisecs)
 		usleep(milisecs / 100);
+} */
+
+void	ft_msleep(long milisecs)
+{
+	long	start;
+
+	start = get_time_ms();
+	usleep(milisecs * 750);
+	while (get_time_ms() - start < milisecs)
+		usleep(750);
 }

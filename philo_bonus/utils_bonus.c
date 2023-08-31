@@ -6,7 +6,7 @@
 /*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 21:52:13 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/30 20:30:55 by jesuserr         ###   ########.fr       */
+/*   Updated: 2023/08/31 11:21:52 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ft_msleep(long milisecs)
 	long	start;
 
 	start = get_time_ms();
-	usleep(milisecs * 750);
+	usleep(milisecs * 850);
 	while (get_time_ms() - start < milisecs)
-		usleep(750);
+		usleep(milisecs * 5);
 }

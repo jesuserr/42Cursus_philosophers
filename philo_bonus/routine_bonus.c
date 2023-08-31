@@ -6,7 +6,7 @@
 /*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 14:22:07 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/28 18:29:06 by jesuserr         ###   ########.fr       */
+/*   Updated: 2023/08/31 11:34:29 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_message(t_info *info, char *msg);
 
-/* Introduces a small delay on even philosophers to avoid deadlocks. */
+/* Introduces delay on even philosophers to avoid deadlocks. */
 /* Routine runs forever until the process is killed in the main program or */
 /* the number of meals are reached and then exits. */
 /* When meals are reached, pilosophers are left in 'thinking' state, this */
@@ -22,7 +22,7 @@ void	print_message(t_info *info, char *msg);
 void	*routine(t_info *info)
 {
 	if (info->philo_id % 2 == 0)
-		ft_msleep(2);
+		ft_msleep(info->eat_time / 2);
 	while (1)
 	{
 		sem_wait(info->forks_sem);

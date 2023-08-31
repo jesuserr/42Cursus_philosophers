@@ -6,7 +6,7 @@
 /*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:54:38 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/29 14:04:09 by jesuserr         ###   ########.fr       */
+/*   Updated: 2023/08/31 11:18:29 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ void	print_message(t_philo *philo, char *msg);
 /* If only one philo is provided, prints message and exits thread. */
 /* When a philo dies, all the life cycle is performed but not printed, */
 /* if required it can be changed adding an if inside the while. */
-/* Philosophers in odd positions are applied a 1 ms delay at start for */
-/* additional help to avoid deadlock */
+/* Philosophers in odd positions are delayed in order to not eat in the */
+/* first turn (this creates an issue when the total number of */
+/* pilosophers is high, odd and with aggressive timings */
 void	*routine(void *arg)
 {
 	t_philo	*philo;
@@ -39,7 +40,7 @@ void	*routine(void *arg)
 		return (NULL);
 	}
 	if (philo->philo_id % 2 == 1)
-		ft_msleep(1);
+		ft_msleep(philo->info->eat_time / 2);
 	while (philo->info->dead == 0 && philo->meals < philo->info->max_meals)
 	{
 		grab_forks_eat_and_release_forks(philo);
@@ -50,26 +51,14 @@ void	*routine(void *arg)
 	return (NULL);
 }
 
-/* Depending on the philo position (even or odd), the forks are grabbed */
-/* in different order to avoid deadlock. Forks are always released in the */
-/* same order, no matter how they were taken. */
 /* To optimize the code the last meal time is captured just before eating */
 /* and the forks are released asap. Meal counters are only updated if */
 /* number of meals has been provided by the user (to save time) */
 void	grab_forks_eat_and_release_forks(t_philo *philo)
 {
-	if (philo->philo_id % 2 == 0)
-	{
-		pthread_mutex_lock(philo->right_fork);
-		print_message(philo, "has taken a fork");
-		pthread_mutex_lock(philo->left_fork);
-	}
-	else
-	{
-		pthread_mutex_lock(philo->left_fork);
-		print_message(philo, "has taken a fork");
-		pthread_mutex_lock(philo->right_fork);
-	}
+	pthread_mutex_lock(philo->right_fork);
+	print_message(philo, "has taken a fork");
+	pthread_mutex_lock(philo->left_fork);
 	print_message(philo, "has taken a fork");
 	print_message(philo, "is eating");
 	philo->last_meal = get_time_ms();

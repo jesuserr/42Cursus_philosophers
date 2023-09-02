@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:55:36 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/24 17:51:53 by codespace        ###   ########.fr       */
+/*   Updated: 2023/09/02 19:41:02 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ int		init_mutexes(t_info *info);
 int		init_philos(t_info *info);
 int		init_threads(t_info *info);
 /*		main.c			*/
-void	join_threads(t_info *info);
 void	destroy_mutexes(t_info *info);
 void	free_memory(t_info *info);
 /*		monitor.c		*/

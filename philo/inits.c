@@ -6,7 +6,7 @@
 /*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:47:49 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/27 22:06:00 by jesuserr         ###   ########.fr       */
+/*   Updated: 2023/09/02 20:49:14 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	init_philos(t_info *info)
 	return (0);
 }
 
-/* Initialize an array of threads (one per philo) */
+/* Initialize an array of threads (one per philo) and detach all of them */
 /* Initialize another thread for monitoring all philos */
 /* Main process waits until completion of monitor thread */
 int	init_threads(t_info *info)
@@ -99,6 +99,7 @@ int	init_threads(t_info *info)
 		if (pthread_create(&philos[i], NULL, &routine, \
 		(void *) &info->philos_array[i]) != 0)
 			return (ft_error_handler(ERROR_TH, info));
+		pthread_detach(philos[i]);
 		i++;
 	}
 	if (pthread_create(&info->monitor, NULL, &monitoring, (void *) info) != 0)

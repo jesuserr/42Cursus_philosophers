@@ -6,7 +6,7 @@
 /*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:10:29 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/27 22:48:15 by jesuserr         ###   ########.fr       */
+/*   Updated: 2023/09/02 20:48:50 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	ft_error_handler(int error, t_info *info)
 	{
 		info->start_time = 1;
 		info->dead = 1;
+		ft_msleep(info->eat_time + info->sleep_time);
 		printf ("%sError creating thread\n", RED);
-		join_threads(info);
 		destroy_mutexes(info);
 		free_memory(info);
 	}

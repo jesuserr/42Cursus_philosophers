@@ -6,34 +6,15 @@
 /*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:05:04 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/28 12:18:09 by jesuserr         ###   ########.fr       */
+/*   Updated: 2023/09/02 20:43:08 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/* Wait for finalization of all the threads */
-/* Print info if number of meals have been specified and nobody died */
-void	join_threads(t_info *info)
-{
-	int	i;
-
-	i = 0;
-	while (i < info->nbr_philos)
-	{
-		pthread_join(info->philos_th[i], NULL);
-		i++;
-	}
-	if ((info->max_meals != INT_MAX) && (info->dead == 0))
-	{
-		pthread_mutex_lock(&info->print_mtx);
-		printf("Each philosopher ate: %d times\n", info->max_meals);
-		printf("Total served meals: %d\n", info->total_meals);
-		pthread_mutex_unlock(&info->print_mtx);
-	}
-}
-
-/* Unlock & destroy all mutexes */
+/* Destroy all mutexes */
+/* Note: Previously the mutexes where unlocked before destroy them */
+/* but it was removed since it caused an error */
 void	destroy_mutexes(t_info *info)
 {
 	int	i;
@@ -41,15 +22,11 @@ void	destroy_mutexes(t_info *info)
 	i = 0;
 	while (i < info->nbr_philos)
 	{
-		pthread_mutex_unlock(&info->forks_mtx[i]);
 		pthread_mutex_destroy(&info->forks_mtx[i]);
 		i++;
 	}
-	pthread_mutex_unlock(&info->print_mtx);
 	pthread_mutex_destroy(&info->print_mtx);
-	pthread_mutex_unlock(&info->start_mtx);
 	pthread_mutex_destroy(&info->start_mtx);
-	pthread_mutex_unlock(&info->meals_mtx);
 	pthread_mutex_destroy(&info->meals_mtx);
 }
 
@@ -63,6 +40,10 @@ void	free_memory(t_info *info)
 		free(info->forks_mtx);
 }
 
+/* The purpose of the sleep is to give time to all the threads to finish */
+/* their vital cycles, before destroying the mutexes and finishing the */
+/* program execution. This is because now all the threads are detached */
+/* instead of joined */
 int	main(int argc, char **argv)
 {
 	t_info	info;
@@ -76,7 +57,14 @@ int	main(int argc, char **argv)
 		return (1);
 	if (init_threads(&info))
 		return (1);
-	join_threads(&info);
+	ft_msleep(info.eat_time + info.sleep_time);
+	if ((info.max_meals != INT_MAX) && (info.dead == 0))
+	{
+		pthread_mutex_lock(&info.print_mtx);
+		printf("Each philosopher ate: %d times\n", info.max_meals);
+		printf("Total served meals: %d\n", info.total_meals);
+		pthread_mutex_unlock(&info.print_mtx);
+	}	
 	destroy_mutexes(&info);
 	free_memory(&info);
 	return (0);

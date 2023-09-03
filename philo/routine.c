@@ -6,7 +6,7 @@
 /*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 17:54:38 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/31 11:18:29 by jesuserr         ###   ########.fr       */
+/*   Updated: 2023/09/03 13:16:16 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	*routine(void *arg)
 	{
 		grab_forks_eat_and_release_forks(philo);
 		print_message(philo, "is sleeping");
-		ft_msleep(philo->info->sleep_time);
+		if (philo->info->dead == 0)
+			ft_msleep(philo->info->sleep_time);
 		print_message(philo, "is thinking");
 	}
 	return (NULL);
@@ -62,7 +63,8 @@ void	grab_forks_eat_and_release_forks(t_philo *philo)
 	print_message(philo, "has taken a fork");
 	print_message(philo, "is eating");
 	philo->last_meal = get_time_ms();
-	ft_msleep(philo->info->eat_time);
+	if (philo->info->dead == 0)
+		ft_msleep(philo->info->eat_time);
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
 	if (philo->info->max_meals != INT_MAX)

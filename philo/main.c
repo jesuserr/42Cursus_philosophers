@@ -6,7 +6,7 @@
 /*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:05:04 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/09/02 20:43:08 by jesuserr         ###   ########.fr       */
+/*   Updated: 2023/09/10 20:08:39 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	main(int argc, char **argv)
 		printf("Each philosopher ate: %d times\n", info.max_meals);
 		printf("Total served meals: %d\n", info.total_meals);
 		pthread_mutex_unlock(&info.print_mtx);
-	}	
+	}
 	destroy_mutexes(&info);
 	free_memory(&info);
 	return (0);

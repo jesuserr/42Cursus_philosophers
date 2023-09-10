@@ -6,7 +6,7 @@
 /*   By: jesuserr <jesuserr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 21:54:19 by jesuserr          #+#    #+#             */
-/*   Updated: 2023/08/28 17:38:24 by jesuserr         ###   ########.fr       */
+/*   Updated: 2023/09/10 20:10:24 by jesuserr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_error_handler(int error, t_info *info)
 	else if (error == ERROR_TIMES)
 		printf ("%sInvalid time - minimum 60 ms\n", RED);
 	else if (error == ERROR_MEALS)
-		printf ("%sInvalid number of meals - range from 1 to 2147483647\n", RED);
+		printf ("%sInvalid meals number - range from 1 to 2147483647\n", RED);
 	else if (error == ERROR_MEM)
 		printf ("%sError allocating memory\n", RED);
 	else if (error == ERROR_TH)
